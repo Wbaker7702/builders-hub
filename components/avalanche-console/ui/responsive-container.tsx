@@ -1,14 +1,14 @@
-import { ReactNode } from "react";
+import { layoutStyles } from "@/lib/styles";
 
 interface ResponsiveContainerProps {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
 }
 
 export function ResponsiveContainer({ children, className = "" }: ResponsiveContainerProps) {
   return (
-    <div className={`container mx-auto px-4 pt-16 pb-6 lg:px-8 lg:pt-20 lg:pb-8 ${className}`}>
+    <div className={`${layoutStyles.pageContainer} ${className}`}>
       {children}
     </div>
   );
-}
+} 

@@ -1,25 +1,14 @@
 "use client"
 import React from "react"
 import { BarChart3, BookOpen, MessageCircle, FileText, HelpCircle } from "lucide-react"
-import { QuickActions, UsageStats, DeveloperResources } from "@/components/dashboard"
-import { PageHeader } from "@/components/ui/page-header"
-import { ResponsiveContainer } from "@/components/ui/responsive-container"
-import { AnnouncementBanner } from "@/components/ui/announcement-banner"
-import { SectionErrorBoundary } from "@/components/ui/error-boundary"
-import { layoutStyles } from "@/lib/styles"
+import { QuickActions, UsageStats, DeveloperResources } from "./dashboard"
+import { ResponsiveContainer } from "./ui/responsive-container"
+import { SectionErrorBoundary } from "./ui/error-boundary"
+import { layoutStyles } from "./lib/styles"
 
 export default function HomePage() {
   return (
     <ResponsiveContainer>
-      <PageHeader
-        title="Welcome to Avalanche Developer Console"
-        description="Build, test, and deploy on Avalanche with our comprehensive developer tools and APIs."
-      />
-
-      <SectionErrorBoundary name="AnnouncementBanner">
-        <AnnouncementBanner />
-      </SectionErrorBoundary>
-
       <SectionErrorBoundary name="QuickActions">
         <QuickActions />
       </SectionErrorBoundary>

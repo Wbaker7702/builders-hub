@@ -96,7 +96,9 @@ export const AppLayout = memo(function AppLayout({ children }: AppLayoutProps) {
                     </SidebarMenuItem>
                     {/* Add separator after API Keys */}
                     {item.name === "API Keys" && (
-                      <SidebarSeparator className="my-2" />
+                      <div className="py-2">
+                        <div className="h-[1px] w-full bg-gray-300 dark:bg-gray-600" />
+                      </div>
                     )}
                   </React.Fragment>
                 );

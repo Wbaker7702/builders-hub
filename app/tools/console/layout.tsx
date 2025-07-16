@@ -39,6 +39,9 @@ const consoleTree = {
       }
     },
     {
+      type: "separator" as const
+    },
+    {
       type: "page" as const,
       name: "Data API",
       url: "/tools/console/data-api",

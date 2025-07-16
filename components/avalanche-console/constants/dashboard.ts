@@ -4,56 +4,35 @@ import {
   Globe,
   Activity,
 } from "lucide-react";
+import type { QuickAction, UsageStats, EndpointUsageData, SystemStatus } from "@/types/analytics";
 
-export interface QuickAction {
-  title: string;
-  description: string;
-  icon: any;
-  href: string;
-}
-
-export interface UsageStats {
-  label: string;
-  value: string;
-  change: string;
-  trend: "up" | "down" | "neutral";
-}
-
-export interface EndpointUsageData {
-  name: string;
-  value: number;
-  color: string;
-}
-
-export interface SystemStatus {
-  name: string;
-  status: string;
-}
+// Navigation items are now imported from the single source of truth
+export { navigationItems } from "./navigation";
 
 export const quickActions: QuickAction[] = [
   {
     title: "Get API Keys",
     description: "Create and manage your API keys for accessing Avalanche services",
     icon: Code,
-    href: "/tools/console/api-keys",
+    href: "/api-keys",
   },
   {
     title: "Request Testnet Funds",
     description: "Get AVAX, USDC, and other tokens for development",
     icon: Zap,
-    href: "/tools/console/faucet",
+    href: "/faucet",
   },
   {
     title: "RPC Endpoints",
     description: "Access free mainnet and testnet RPC endpoints",
     icon: Globe,
-    href: "/tools/console/rpcs",
+    href: "/rpcs",
   },
   {
     title: "Setup Webhooks",
     description: "Configure real-time blockchain event notifications",
     icon: Activity,
-    href: "/tools/console/webhooks-api",
+    href: "/webhooks-api",
   },
 ];
 
@@ -76,4 +55,4 @@ export const systemStatus: SystemStatus[] = [
   { name: "RPC Endpoints", status: "Operational" },
   { name: "Webhooks", status: "Operational" },
   { name: "Faucet", status: "Degraded" },
-];
+]; 
