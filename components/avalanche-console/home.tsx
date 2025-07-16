@@ -10,14 +10,14 @@ import { layoutStyles } from "./lib/styles"
 
 export default function HomePage() {
   return (
-    <ResponsiveContainer>
+    <ResponsiveContainer className="space-y-12">
       <SectionErrorBoundary name="QuickActions">
         <QuickActions />
       </SectionErrorBoundary>
 
       {/* API Usage Analytics */}
       <SectionErrorBoundary name="UsageAnalytics">
-        <div className="space-geist">
+        <div className="space-y-6">
           <h2 className={`${layoutStyles.sectionTitle} flex items-center gap-3`}>
             <BarChart3 className="h-6 w-6" />
             API Usage Analytics
@@ -29,7 +29,7 @@ export default function HomePage() {
 
       {/* Developer Resources */}
       <SectionErrorBoundary name="DeveloperResources">
-        <div className="space-geist">
+        <div className="space-y-6">
           <h2 className={`${layoutStyles.sectionTitle} flex items-center gap-3`}>
             <BookOpen className="h-6 w-6" />
             Developer Resources
@@ -57,7 +57,7 @@ export default function HomePage() {
                 className="flex items-center justify-center p-6"
               >
                 <MessageCircle className="h-6 w-6 mr-3 text-muted-foreground group-hover:text-foreground transition-colors" />
-                <span className="text-copy-16 text-foreground font-medium">Join our Discord</span>
+                <span className="text-sm font-medium">Join our Discord</span>
               </a>
             </div>
             <div className={`${layoutStyles.card} group cursor-pointer console-card`}>
@@ -68,7 +68,7 @@ export default function HomePage() {
                 className="flex items-center justify-center p-6"
               >
                 <FileText className="h-6 w-6 mr-3 text-muted-foreground group-hover:text-foreground transition-colors" />
-                <span className="text-copy-16 text-foreground font-medium">Read our docs</span>
+                <span className="text-sm font-medium">Read our docs</span>
               </a>
             </div>
           </div>
