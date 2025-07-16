@@ -7,7 +7,7 @@ interface ResponsiveContainerProps {
 
 export function ResponsiveContainer({ children, className = "" }: ResponsiveContainerProps) {
   return (
-    <div className={`${layoutStyles.pageContainer} ${className}`}>
+    <div className={`${layoutStyles.pageContainer} pt-16 ${className}`}>
       {children}
     </div>
   );

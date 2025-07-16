@@ -11,6 +11,14 @@ import { layoutStyles } from "./lib/styles"
 export default function HomePage() {
   return (
     <ResponsiveContainer className="space-y-12">
+      {/* Page Header */}
+      <div className="space-y-4">
+        <h1 className={layoutStyles.pageTitle}>Developer Console</h1>
+        <p className="text-lg text-muted-foreground">
+          Build, test, and deploy on Avalanche with comprehensive developer tools and APIs
+        </p>
+      </div>
+
       <SectionErrorBoundary name="QuickActions">
         <QuickActions />
       </SectionErrorBoundary>
@@ -19,7 +27,9 @@ export default function HomePage() {
       <SectionErrorBoundary name="UsageAnalytics">
         <div className="space-y-6">
           <h2 className={`${layoutStyles.sectionTitle} flex items-center gap-3`}>
-            <BarChart3 className="h-6 w-6" />
+            <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+              <BarChart3 className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+            </div>
             API Usage Analytics
           </h2>
           
@@ -31,7 +41,9 @@ export default function HomePage() {
       <SectionErrorBoundary name="DeveloperResources">
         <div className="space-y-6">
           <h2 className={`${layoutStyles.sectionTitle} flex items-center gap-3`}>
-            <BookOpen className="h-6 w-6" />
+            <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+              <BookOpen className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+            </div>
             Developer Resources
           </h2>
           
@@ -44,7 +56,9 @@ export default function HomePage() {
         <div className="mt-12 pt-8 border-t border-border">
           <div className="mb-6">
             <h2 className={`${layoutStyles.sectionTitle} flex items-center gap-3`}>
-              <HelpCircle className="h-6 w-6" />
+              <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                <HelpCircle className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+              </div>
               Support
             </h2>
           </div>
@@ -56,7 +70,9 @@ export default function HomePage() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-center p-6"
               >
-                <MessageCircle className="h-6 w-6 mr-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-foreground transition-all duration-300 mr-3">
+                  <MessageCircle className="h-5 w-5 text-gray-600 dark:text-gray-400 group-hover:text-background transition-colors" />
+                </div>
                 <span className="text-sm font-medium">Join our Discord</span>
               </a>
             </div>
@@ -67,7 +83,9 @@ export default function HomePage() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-center p-6"
               >
-                <FileText className="h-6 w-6 mr-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-foreground transition-all duration-300 mr-3">
+                  <FileText className="h-5 w-5 text-gray-600 dark:text-gray-400 group-hover:text-background transition-colors" />
+                </div>
                 <span className="text-sm font-medium">Read our docs</span>
               </a>
             </div>

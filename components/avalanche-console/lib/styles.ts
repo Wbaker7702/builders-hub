@@ -3,7 +3,7 @@ import { cn } from "./utils";
 // Layout patterns with standard Tailwind classes
 export const layoutStyles = {
   // Page layouts
-  pageContainer: "w-full min-h-screen flex-1 space-y-8 p-6 lg:p-8",
+  pageContainer: "w-full min-h-screen flex-1 space-y-8 px-6 pb-8 lg:px-8 lg:pb-8",
   pageHeader: "flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0 mb-8", 
   
   // Spacing patterns

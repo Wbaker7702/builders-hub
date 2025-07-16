@@ -8,7 +8,9 @@ export function QuickActions() {
   return (
     <div className="space-y-6">
       <h2 className={`${layoutStyles.sectionTitle} flex items-center gap-3`}>
-        <Zap className="h-6 w-6" />
+        <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+          <Zap className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+        </div>
         Quick Actions
       </h2>
       <div className={layoutStyles.quickActionsGrid}>
