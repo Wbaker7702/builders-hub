@@ -1,7 +1,5 @@
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { usageStats } from "../constants/dashboard";
-import { layoutStyles } from "../lib/styles";
 
 export function UsageStats() {
   const getTrendIcon = (trend: string) => {
@@ -27,24 +25,27 @@ export function UsageStats() {
   };
 
   return (
-    <div className={layoutStyles.statsGrid}>
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {usageStats.map((stat, index) => (
-        <Card key={index} className="transition-all duration-300 hover:shadow-md">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+        <div
+          key={index}
+          className="rounded-lg border bg-card p-6 transition-all hover:shadow-sm"
+        >
+          <div className="space-y-2">
+            <p className="text-sm font-medium text-muted-foreground">
               {stat.label}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-2xl font-bold text-foreground">{stat.value}</span>
-              {getTrendIcon(stat.trend)}
+            </p>
+            <div className="flex items-baseline justify-between">
+              <span className="text-2xl font-bold">{stat.value}</span>
+              <div className="flex items-center gap-1">
+                {getTrendIcon(stat.trend)}
+                <span className={`text-xs font-medium ${getTrendColor(stat.trend)}`}>
+                  {stat.change}
+                </span>
+              </div>
             </div>
-            <div className={`text-xs font-medium ${getTrendColor(stat.trend)}`}>
-              {stat.change}
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       ))}
     </div>
   );

@@ -6,8 +6,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Copy, Plus } from "lucide-react"
+import { Copy, Plus, Eye, EyeOff } from "lucide-react"
 import { toast } from "sonner"
+import { Heading } from "fumadocs-ui/components/heading"
+import { Callout } from "fumadocs-ui/components/callout"
 
 interface ApiKey {
   id: string
@@ -36,6 +38,7 @@ export default function ApiKeysPage() {
   ])
   const [newKeyName, setNewKeyName] = useState("")
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [visibleKeys, setVisibleKeys] = useState<Set<string>>(new Set())
 
   const createApiKey = () => {
     if (!newKeyName.trim()) {
@@ -62,21 +65,28 @@ export default function ApiKeysPage() {
     toast.success("API key copied to clipboard!")
   }
 
+  const toggleKeyVisibility = (keyId: string) => {
+    setVisibleKeys(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(keyId)) {
+        newSet.delete(keyId)
+      } else {
+        newSet.add(keyId)
+      }
+      return newSet
+    })
+  }
+
   const maskKey = (key: string) => {
     return key.substring(0, 8) + "••••••" + key.substring(key.length - 4)
   }
 
   return (
-    <div className="container mx-auto px-4 pt-16 pb-6 lg:px-8 lg:pt-20 lg:pb-8">
-      <div className="space-y-6">
-        {/* Header */}
+    <div className="container mx-auto max-w-6xl space-y-8">
+      {/* Header */}
+      <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">API Keys</h1>
-            <p className="text-muted-foreground mt-2">
-              Create and manage your API keys for accessing Avalanche services
-            </p>
-          </div>
+          <Heading as="h1">API Keys</Heading>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button className="flex items-center gap-2">
@@ -114,58 +124,77 @@ export default function ApiKeysPage() {
             </DialogContent>
           </Dialog>
         </div>
+        <p className="text-muted-foreground">
+          Create and manage your API keys for accessing Avalanche services
+        </p>
+      </div>
 
-        {/* API Keys Table */}
-        <div className="border rounded-lg">
-          <Table>
-            <TableHeader>
+      <Callout type="info">
+        Keep your API keys secure and never share them publicly. Rotate keys regularly for better security.
+      </Callout>
+
+      {/* API Keys Table */}
+      <div className="border rounded-lg">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Key</TableHead>
+              <TableHead>Requests (24h)</TableHead>
+              <TableHead>Created</TableHead>
+              <TableHead className="w-[100px]">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {apiKeys.length === 0 ? (
               <TableRow>
-                <TableHead>Key</TableHead>
-                <TableHead>Requests (24h)</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead className="w-[50px]"></TableHead>
+                <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                  No API keys found. Create your first API key above.
+                </TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody>
-              {apiKeys.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
-                    No API keys found. Create your first API key above.
+            ) : (
+              apiKeys.map((apiKey) => (
+                <TableRow key={apiKey.id}>
+                  <TableCell>
+                    <div className="space-y-1">
+                      <div className="font-medium">{apiKey.name}</div>
+                      <div className="font-mono text-sm text-muted-foreground flex items-center gap-2">
+                        {visibleKeys.has(apiKey.id) ? apiKey.key : maskKey(apiKey.key)}
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => toggleKeyVisibility(apiKey.id)}
+                          className="h-6 w-6 p-0"
+                        >
+                          {visibleKeys.has(apiKey.id) ? (
+                            <EyeOff className="h-3 w-3" />
+                          ) : (
+                            <Eye className="h-3 w-3" />
+                          )}
+                        </Button>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="font-mono">
+                    {apiKey.requests24h}
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {apiKey.created}
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => copyToClipboard(apiKey.key)}
+                      className="h-8 w-8 p-0"
+                    >
+                      <Copy className="h-4 w-4" />
+                    </Button>
                   </TableCell>
                 </TableRow>
-              ) : (
-                apiKeys.map((apiKey) => (
-                  <TableRow key={apiKey.id}>
-                    <TableCell>
-                      <div className="space-y-1">
-                        <div className="font-medium">{apiKey.name}</div>
-                        <div className="font-mono text-sm text-muted-foreground">
-                          {maskKey(apiKey.key)}
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-mono">
-                      {apiKey.requests24h}
-                    </TableCell>
-                    <TableCell className="text-muted-foreground">
-                      {apiKey.created}
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => copyToClipboard(apiKey.key)}
-                        className="h-8 w-8 p-0"
-                      >
-                        <Copy className="h-4 w-4" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </div>
+              ))
+            )}
+          </TableBody>
+        </Table>
       </div>
     </div>
   )

@@ -1,6 +1,5 @@
-import { ExternalLink, BookOpen, Code, Zap } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
-import { layoutStyles } from "../lib/styles";
+import { Card, Cards } from "fumadocs-ui/components/card";
+import { BookOpen, Code, Zap } from "lucide-react";
 
 const resources = [
   {
@@ -28,36 +27,20 @@ const resources = [
 
 export function DeveloperResources() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {resources.map((resource, index) => (
-        <Card key={index} className="group cursor-pointer transition-all duration-300 hover:shadow-md hover:scale-105">
-          <a 
-            href={resource.href} 
-            className="block h-full"
-            target={resource.external ? "_blank" : undefined}
-            rel={resource.external ? "noopener noreferrer" : undefined}
-          >
-            <CardHeader className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-all duration-300">
-                  <resource.icon className="h-5 w-5 text-gray-600 dark:text-gray-400 group-hover:text-background" />
-                </div>
-                {resource.external && (
-                  <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-                )}
-              </div>
-              <div className="space-y-2">
-                <CardTitle className="group-hover:text-foreground transition-colors duration-300">
-                  {resource.title}
-                </CardTitle>
-                <CardDescription className="transition-colors duration-300">
-                  {resource.description}
-                </CardDescription>
-              </div>
-            </CardHeader>
-          </a>
-        </Card>
-      ))}
-    </div>
+    <Cards>
+      {resources.map((resource, index) => {
+        const Icon = resource.icon;
+        return (
+          <Card
+            key={index}
+            href={resource.href}
+            icon={<Icon />}
+            title={resource.title}
+            description={resource.description}
+            external={resource.external}
+          />
+        );
+      })}
+    </Cards>
   );
 }

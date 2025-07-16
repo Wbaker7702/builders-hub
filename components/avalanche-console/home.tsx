@@ -1,19 +1,22 @@
 "use client"
 import React from "react"
 import { BarChart3, BookOpen, MessageCircle, FileText, HelpCircle } from "lucide-react"
+import { Card, Cards } from "fumadocs-ui/components/card"
+import { Heading } from "fumadocs-ui/components/heading"
 import { QuickActions } from "./dashboard/QuickActions"
 import { UsageStats } from "./dashboard/UsageStats"
 import { DeveloperResources } from "./dashboard/DeveloperResources"
 import { ResponsiveContainer } from "./ui/responsive-container"
 import { SectionErrorBoundary } from "./ui/error-boundary"
-import { layoutStyles } from "./lib/styles"
 
 export default function HomePage() {
   return (
     <ResponsiveContainer className="space-y-12">
       {/* Page Header */}
       <div className="space-y-4">
-        <h1 className={layoutStyles.pageTitle}>Developer Console</h1>
+        <Heading as="h1" className="text-4xl font-bold">
+          Developer Console
+        </Heading>
         <p className="text-lg text-muted-foreground">
           Build, test, and deploy on Avalanche with comprehensive developer tools and APIs
         </p>
@@ -26,10 +29,10 @@ export default function HomePage() {
       {/* API Usage Analytics */}
       <SectionErrorBoundary name="UsageAnalytics">
         <div className="space-y-6">
-          <h2 className={`${layoutStyles.sectionTitle} flex items-center gap-3`}>
+          <Heading as="h2" className="flex items-center gap-3">
             <BarChart3 className="h-6 w-6" />
             API Usage Analytics
-          </h2>
+          </Heading>
           
           <UsageStats />
         </div>
@@ -38,10 +41,10 @@ export default function HomePage() {
       {/* Developer Resources */}
       <SectionErrorBoundary name="DeveloperResources">
         <div className="space-y-6">
-          <h2 className={`${layoutStyles.sectionTitle} flex items-center gap-3`}>
+          <Heading as="h2" className="flex items-center gap-3">
             <BookOpen className="h-6 w-6" />
             Developer Resources
-          </h2>
+          </Heading>
           
           <DeveloperResources />
         </div>
@@ -51,35 +54,27 @@ export default function HomePage() {
       <SectionErrorBoundary name="SupportSection">
         <div className="mt-12 pt-8 border-t border-border">
           <div className="mb-6">
-            <h2 className={`${layoutStyles.sectionTitle} flex items-center gap-3`}>
+            <Heading as="h2" className="flex items-center gap-3">
               <HelpCircle className="h-6 w-6" />
               Support
-            </h2>
+            </Heading>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className={`${layoutStyles.card} group cursor-pointer console-card`}>
-              <a
-                href="https://discord.gg/avalanche"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center p-6"
-              >
-                <MessageCircle className="h-6 w-6 mr-3 text-muted-foreground group-hover:text-foreground transition-colors" />
-                <span className="text-sm font-medium">Join our Discord</span>
-              </a>
-            </div>
-            <div className={`${layoutStyles.card} group cursor-pointer console-card`}>
-              <a
-                href="https://docs.avax.network"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center p-6"
-              >
-                <FileText className="h-6 w-6 mr-3 text-muted-foreground group-hover:text-foreground transition-colors" />
-                <span className="text-sm font-medium">Read our docs</span>
-              </a>
-            </div>
-          </div>
+          <Cards>
+            <Card
+              href="https://discord.gg/avalanche"
+              icon={<MessageCircle />}
+              title="Join our Discord"
+              description="Connect with the Avalanche community"
+              external
+            />
+            <Card
+              href="https://docs.avax.network"
+              icon={<FileText />}
+              title="Read our docs"
+              description="Comprehensive documentation and guides"
+              external
+            />
+          </Cards>
         </div>
       </SectionErrorBoundary>
     </ResponsiveContainer>
