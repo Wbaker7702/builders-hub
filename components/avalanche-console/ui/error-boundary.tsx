@@ -2,10 +2,10 @@
 
 import React from 'react'
 import { AlertTriangle, RefreshCw, Bug, Copy } from 'lucide-react'
-import { Button } from './button'
-import { Alert, AlertDescription, AlertTitle } from './alert'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './collapsible'
-import { copyToClipboard } from '@/lib/utils'
+import { Button } from '../../ui/button'
+import { Alert, AlertDescription, AlertTitle } from '../../ui/alert'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../../ui/collapsible'
+import { copyToClipboard } from '../lib/utils'
 
 interface ErrorBoundaryState {
   hasError: boolean

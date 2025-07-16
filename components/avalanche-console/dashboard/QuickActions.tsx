@@ -1,5 +1,5 @@
 import { ArrowRight, Zap } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import { quickActions } from "../constants/dashboard";
 import { layoutStyles } from "../lib/styles";
 import Link from "next/link";

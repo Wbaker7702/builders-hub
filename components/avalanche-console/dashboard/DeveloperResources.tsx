@@ -1,5 +1,5 @@
 import { ExternalLink, BookOpen, Code, Zap } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import { layoutStyles } from "../lib/styles";
 
 const resources = [

@@ -1,4 +1,4 @@
-import { layoutStyles } from "@/lib/styles";
+import { layoutStyles } from "../lib/styles";
 
 interface ResponsiveContainerProps {
   children: React.ReactNode;
