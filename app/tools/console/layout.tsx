@@ -39,7 +39,8 @@ const consoleTree = {
       }
     },
     {
-      type: "separator" as const
+      type: "separator" as const,
+      name: ""
     },
     {
       type: "page" as const,
@@ -98,10 +99,8 @@ export default function ConsoleLayout({ children }: { children: ReactNode }) {
   return (
     <DocsLayout
       tree={consoleTree}
-      tabMode="navbar"
       nav={{
         ...baseOptions.nav,
-        mode: 'top',
         title: (
           <>
             <AvalancheLogo className="size-7" fill="currentColor" />
