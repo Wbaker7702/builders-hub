@@ -1,9 +1,7 @@
 "use client"
 import React from "react"
 import { BarChart3, BookOpen, MessageCircle, FileText, HelpCircle } from "lucide-react"
-import { QuickActions } from "@/components/dashboard/QuickActions"
-import { UsageStats } from "@/components/dashboard/UsageStats"
-import { DeveloperResources } from "@/components/dashboard/DeveloperResources"
+import { QuickActions, UsageStats, DeveloperResources } from "@/components/dashboard"
 import { PageHeader } from "@/components/ui/page-header"
 import { ResponsiveContainer } from "@/components/ui/responsive-container"
 import { AnnouncementBanner } from "@/components/ui/announcement-banner"
@@ -60,7 +58,7 @@ export default function HomePage() {
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className={`${layoutStyles.card} group cursor-pointer`}>
+            <div className={`${layoutStyles.card} group cursor-pointer console-card`}>
               <a
                 href="https://discord.gg/avalanche"
                 target="_blank"
@@ -71,7 +69,7 @@ export default function HomePage() {
                 <span className="text-copy-16 text-foreground font-medium">Join our Discord</span>
               </a>
             </div>
-            <div className={`${layoutStyles.card} group cursor-pointer`}>
+            <div className={`${layoutStyles.card} group cursor-pointer console-card`}>
               <a
                 href="https://docs.avax.network"
                 target="_blank"

@@ -1,53 +1,48 @@
-import bundleAnalyzer from '@next/bundle-analyzer'
-
-const withBundleAnalyzer = bundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
-})
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: '/tools/console',
+  // Remove standalone output since this is now part of the main app
+  // output: 'standalone',
+  
+  // Disable eslint during builds since we'll use the main app's eslint
   eslint: {
-    // Enable ESLint during builds for better code quality
-    ignoreDuringBuilds: false,
-    dirs: ['app', 'components', 'lib', 'hooks'],
+    ignoreDuringBuilds: true,
   },
+  
+  // Disable typescript checks during build since we'll use the main app's checks
   typescript: {
-    // Enable TypeScript error checking during builds
-    ignoreBuildErrors: false,
-  },
-  images: {
-    unoptimized: false,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'api.avax.network',
-      },
-      {
-        protocol: 'https',
-        hostname: 'developers.avacloud.io',
-      },
-    ],
-    formats: ['image/avif', 'image/webp'],
-  },
-  compiler: {
-    // Remove console logs in production
-    removeConsole: process.env.NODE_ENV === 'production' ? {
-      exclude: ['error', 'warn'],
-    } : false,
+    ignoreBuildErrors: true,
   },
 
-  // Disable powered by header
-  poweredByHeader: false,
-  // Compress responses
-  compress: true,
-  // Enable strict mode
-  reactStrictMode: true,
-  // Experimental features for better performance
   experimental: {
-    // optimizeCss: true, // Disabled: requires critters package
+    // Use the parent's node_modules for server components
+    serverComponentsExternalPackages: ['@radix-ui/*'],
   },
-  // Production optimizations
-  productionBrowserSourceMaps: false,
-}
 
-export default withBundleAnalyzer(nextConfig)
+  webpack: (config, { isServer }) => {
+    // Ensure we use the parent's node_modules
+    config.resolve.modules = [
+      '../node_modules',
+      'node_modules',
+      ...config.resolve.modules,
+    ];
+
+    // Bundle analyzer configuration
+    if (process.env.ANALYZE) {
+      const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+      config.plugins.push(
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'static',
+          reportFilename: isServer
+            ? '../analyze/server.html'
+            : '../analyze/client.html',
+          openAnalyzer: false,
+        })
+      );
+    }
+
+    return config;
+  },
+};
+
+export default nextConfig;

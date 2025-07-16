@@ -359,8 +359,8 @@ const EcosystemConstellation = () => {
 		}
 	];
 
-	// Create sophisticated multi-orbital positioning
-	const createMultiOrbitalPositions = () => {
+	// Create sophisticated multi-orbital positioning (memoized to prevent hydration issues)
+	const allPositionedNetworks = React.useMemo(() => {
 		// Primary orbit - inner ring, larger size
 		const primaryPositions = primaryNetworks.map((network, index) => {
 			const angle = (index / primaryNetworks.length) * 2 * Math.PI;
@@ -370,9 +370,9 @@ const EcosystemConstellation = () => {
 			
 			return {
 				...network,
-				x: x + ((index * 5) % 7 - 3) * 2, // Subtle randomization
-				y: y + ((index * 7) % 9 - 4) * 2,
-				delay: index * 0.15,
+				x: Math.round(x + ((index * 5) % 7 - 3) * 2), // Round to prevent precision differences
+				y: Math.round(y + ((index * 7) % 9 - 4) * 2),
+				delay: Math.round((index * 0.15) * 10) / 10, // Round delay to 1 decimal
 				size: 'primary',
 				tier: 'primary'
 			};
@@ -387,18 +387,16 @@ const EcosystemConstellation = () => {
 			
 			return {
 				...network,
-				x: x + ((index * 3) % 11 - 5) * 3,
-				y: y + ((index * 9) % 13 - 6) * 3,
-				delay: index * 0.1 + 1, // Delayed after primary
+				x: Math.round(x + ((index * 3) % 11 - 5) * 3),
+				y: Math.round(y + ((index * 9) % 13 - 6) * 3),
+				delay: Math.round((index * 0.1 + 1) * 10) / 10, // Round delay to 1 decimal
 				size: 'secondary',
 				tier: 'secondary'
 			};
 		});
 
 		return [...primaryPositions, ...secondaryPositions];
-	};
-
-	const allPositionedNetworks = createMultiOrbitalPositions();
+	}, []); // Empty dependency array ensures this only runs once
 
 	const getNetworkTheme = (type: string) => {
 		switch (type) {
