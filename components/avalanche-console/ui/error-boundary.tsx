@@ -61,7 +61,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
     this.props.onError?.(error, errorInfo, errorId)
     
     // Log error using our error logger
-    import('@/lib/error-logger').then(({ errorLogger }) => {
+    import('../lib/error-logger').then(({ errorLogger }) => {
       errorLogger.logReactError(error, errorInfo, {
         component: this.props.name,
         boundary: this.props.name || 'Unknown',

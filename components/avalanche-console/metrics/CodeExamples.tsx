@@ -1,9 +1,8 @@
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
+import { Button } from "../../ui/button";
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
-import { CODE_EXAMPLES } from '@/constants/metrics';
-import { CodeExampleTabs } from '@/components/common';
+import { CODE_EXAMPLES } from '../constants/metrics';
+import { CodeExampleTabs } from '../common';
 
 interface CodeExamplesProps {
   chainId: string;

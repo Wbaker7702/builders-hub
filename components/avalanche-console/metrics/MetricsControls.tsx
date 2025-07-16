@@ -1,10 +1,10 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
+import { Button } from "../../ui/button";
 import { RefreshCw } from "lucide-react";
-import { AVALANCHE_CHAINS, METRIC_TYPES, TIME_INTERVALS, TIME_RANGES } from '@/constants/metrics';
-import { layoutStyles } from '@/lib/styles';
+import { AVALANCHE_CHAINS, METRIC_TYPES, TIME_INTERVALS, TIME_RANGES } from '../constants/metrics';
+import { layoutStyles } from '../lib/styles';
 
 interface MetricsControlsProps {
   chainId: string;

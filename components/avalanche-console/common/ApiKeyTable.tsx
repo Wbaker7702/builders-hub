@@ -1,6 +1,7 @@
-import React from 'react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { CopyButton } from './CopyButton';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
+import { Eye, EyeOff, Copy, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { CopyButton } from "./CopyButton";
 
 export interface ApiKey {
   key: string;

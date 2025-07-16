@@ -1,9 +1,9 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
+import { Badge } from "../../ui/badge";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
-import { type MetricDataPoint } from '@/constants/metrics';
+import { type MetricDataPoint } from '../constants/metrics';
 
 interface MetricsChartProps {
   data: MetricDataPoint[];

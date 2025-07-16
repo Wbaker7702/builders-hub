@@ -1,6 +1,7 @@
-import { Copy } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
+import { Button } from "../../ui/button";
+import { toast } from "sonner";
+import { Copy, Check } from "lucide-react";
+import { useState } from "react";
 
 interface CopyButtonProps {
   text: string;
