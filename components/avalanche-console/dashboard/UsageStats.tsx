@@ -30,18 +30,18 @@ export function UsageStats() {
     <div className={layoutStyles.statsGrid}>
       {usageStats.map((stat, index) => (
         <Card key={index} className="transition-all duration-300 hover:shadow-md">
-          <CardHeader className="pb-2">
+          <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-muted-foreground">
               {stat.label}
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-2xl font-bold text-foreground">{stat.value}</span>
-              <div className={`flex items-center gap-1 text-sm ${getTrendColor(stat.trend)}`}>
-                {getTrendIcon(stat.trend)}
-                <span>{stat.change}</span>
-              </div>
+              {getTrendIcon(stat.trend)}
+            </div>
+            <div className={`text-xs font-medium ${getTrendColor(stat.trend)}`}>
+              {stat.change}
             </div>
           </CardContent>
         </Card>

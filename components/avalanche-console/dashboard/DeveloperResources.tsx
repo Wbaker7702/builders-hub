@@ -37,21 +37,23 @@ export function DeveloperResources() {
             target={resource.external ? "_blank" : undefined}
             rel={resource.external ? "noopener noreferrer" : undefined}
           >
-            <CardHeader>
+            <CardHeader className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                  <resource.icon className="h-5 w-5" />
+                <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-all duration-300">
+                  <resource.icon className="h-5 w-5 text-gray-600 dark:text-gray-400 group-hover:text-background" />
                 </div>
                 {resource.external && (
                   <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
                 )}
               </div>
-              <CardTitle className="group-hover:text-foreground transition-colors duration-300">
-                {resource.title}
-              </CardTitle>
-              <CardDescription className="transition-colors duration-300">
-                {resource.description}
-              </CardDescription>
+              <div className="space-y-2">
+                <CardTitle className="group-hover:text-foreground transition-colors duration-300">
+                  {resource.title}
+                </CardTitle>
+                <CardDescription className="transition-colors duration-300">
+                  {resource.description}
+                </CardDescription>
+              </div>
             </CardHeader>
           </a>
         </Card>
