@@ -1,0 +1,79 @@
+import {
+  Code,
+  Zap,
+  Globe,
+  Activity,
+} from "lucide-react";
+
+export interface QuickAction {
+  title: string;
+  description: string;
+  icon: any;
+  href: string;
+}
+
+export interface UsageStats {
+  label: string;
+  value: string;
+  change: string;
+  trend: "up" | "down" | "neutral";
+}
+
+export interface EndpointUsageData {
+  name: string;
+  value: number;
+  color: string;
+}
+
+export interface SystemStatus {
+  name: string;
+  status: string;
+}
+
+export const quickActions: QuickAction[] = [
+  {
+    title: "Get API Keys",
+    description: "Create and manage your API keys for accessing Avalanche services",
+    icon: Code,
+    href: "/tools/console/api-keys",
+  },
+  {
+    title: "Request Testnet Funds",
+    description: "Get AVAX, USDC, and other tokens for development",
+    icon: Zap,
+    href: "/tools/console/faucet",
+  },
+  {
+    title: "RPC Endpoints",
+    description: "Access free mainnet and testnet RPC endpoints",
+    icon: Globe,
+    href: "/tools/console/rpcs",
+  },
+  {
+    title: "Setup Webhooks",
+    description: "Configure real-time blockchain event notifications",
+    icon: Activity,
+    href: "/tools/console/webhooks-api",
+  },
+];
+
+export const usageStats: UsageStats[] = [
+  { label: "Total Requests (24h)", value: "3,467", change: "+12.3%", trend: "up" },
+  { label: "Avg Response Time", value: "156ms", change: "-8.2%", trend: "down" },
+  { label: "Error Rate", value: "0.55%", change: "-2.1%", trend: "down" },
+  { label: "Active Webhooks", value: "3", change: "0%", trend: "neutral" },
+];
+
+export const endpointUsage: EndpointUsageData[] = [
+  { name: "Data API", value: 12500, color: "#3B82F6" },
+  { name: "RPC Calls", value: 8200, color: "#10B981" },
+  { name: "Webhooks", value: 427, color: "#F59E0B" },
+  { name: "Faucet", value: 156, color: "#EF4444" },
+];
+
+export const systemStatus: SystemStatus[] = [
+  { name: "Data API", status: "Operational" },
+  { name: "RPC Endpoints", status: "Operational" },
+  { name: "Webhooks", status: "Operational" },
+  { name: "Faucet", status: "Degraded" },
+];

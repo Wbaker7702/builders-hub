@@ -25,6 +25,7 @@ import {
   Ticket,
   Earth,
   ArrowLeftRight,
+  Terminal,
 } from 'lucide-react';
 import Image from 'next/image';
 import { SiGithub } from '@icons-pack/react-simple-icons';
@@ -291,13 +292,23 @@ export const toolsMenu: LinkItemType = {
       },
     },
     {
+      icon: <Terminal />,
+      text: 'Developer Console',
+      description:
+        'Access APIs, manage keys, and configure webhooks for Avalanche development.',
+      url: '/tools/console',
+      menu: {
+        className: 'lg:col-start-3 lg:row-start-1',
+      },
+    },
+    {
       icon: <HandCoins />,
       text: 'Testnet Faucet',
       description:
         'Claim Fuji AVAX tokens from the testnet faucet to test your dApps.',
       url: 'https://core.app/tools/testnet-faucet/?subnet=c&token=c',
       menu: {
-        className: 'lg:col-start-3 lg:row-start-1',
+        className: 'lg:col-start-3 lg:row-start-2',
       },
     },
     {

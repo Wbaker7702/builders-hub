@@ -30,6 +30,14 @@ const features = [
   },
   {
     id: 3,
+    label: "Developer Console",
+    title: "<strong>Avalanche Console</strong>.",
+    description: "Access APIs, manage keys, get testnet funds, and configure webhooks for development.",
+    icon: CircleFadingPlus,
+    href: "/tools/console"
+  },
+  {
+    id: 4,
     label: "Faucet",
     title: "<strong>Fuji Testnet Faucet</strong>.",
     description: "Claim Fuji AVAX tokens from the testnet faucet to test your dApps.",
@@ -37,7 +45,7 @@ const features = [
     href: "https://core.app/tools/testnet-faucet/?subnet=c&token=c"
   },
   {
-    id: 4,
+    id: 5,
     label: "dApp Development",
     title: "<strong>Avalanche Starter Kit</strong>.",
     description: "Spin up short-lived test environments for building dApps using interoperability features like ICM and ICTT.",
