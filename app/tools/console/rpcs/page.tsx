@@ -209,34 +209,36 @@ export default function RpcEndpointsPage() {
               <CardTitle>RPC Testing</CardTitle>
               <CardDescription>Test EVM RPC methods directly from the browser</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label>Network</Label>
-                    <Select value={selectedNetwork} onValueChange={(v) => setSelectedNetwork(v as "mainnet" | "testnet")}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="mainnet">Mainnet</SelectItem>
-                        <SelectItem value="testnet">Testnet (Fuji)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                            <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label>Network</Label>
+                      <Select value={selectedNetwork} onValueChange={(v) => setSelectedNetwork(v as "mainnet" | "testnet")}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="mainnet">Mainnet</SelectItem>
+                          <SelectItem value="testnet">Testnet (Fuji)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-                  <div className="space-y-2">
-                    <Label>RPC Method</Label>
-                    <Select value={selectedMethod} onValueChange={setSelectedMethod}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {rpcMethods.map((method) => (
-                          <SelectItem key={method.value} value={method.value}>
-                            {method.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <div className="space-y-2">
+                      <Label>RPC Method</Label>
+                      <Select value={selectedMethod} onValueChange={setSelectedMethod}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {rpcMethods.map((method) => (
+                            <SelectItem key={method.value} value={method.value}>
+                              {method.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
 
                   {selectedMethodData && (
