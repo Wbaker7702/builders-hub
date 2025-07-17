@@ -1,36 +1,36 @@
-import { Button } from "../../ui/button";
-import { toast } from "sonner";
-import { Copy, Check } from "lucide-react";
-import { useState } from "react";
+'use client';
 
-interface CopyButtonProps {
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import type { ButtonHTMLAttributes } from 'react';
+import { Copy, Check } from 'lucide-react';
+import { cn } from '@/lib/cn';
+import { useCopyToClipboard } from '../hooks/use-copy-to-clipboard';
+
+interface CopyButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
   text: string;
-  variant?: "ghost" | "outline" | "default" | "destructive" | "secondary" | "link";
-  size?: "default" | "sm" | "lg" | "icon";
-  className?: string;
   successMessage?: string;
+  className?: string;
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+  size?: 'default' | 'sm' | 'lg' | 'icon';
 }
 
 export function CopyButton({ 
   text, 
-  variant = "ghost", 
-  size = "sm", 
+  successMessage = 'Copied!',
   className,
-  successMessage = "Copied to clipboard"
+  variant = 'ghost',
+  size = 'sm',
+  ...props 
 }: CopyButtonProps) {
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(text);
-      toast({
-        title: "Success",
-        description: successMessage,
-      });
-    } catch {
-      toast({
-        title: "Error",
-        description: "Failed to copy to clipboard",
-        variant: "destructive",
-      });
+  const { copy } = useCopyToClipboard();
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    const success = await copy(text, successMessage);
+    if (success) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
   };
 
@@ -38,11 +38,15 @@ export function CopyButton({
     <Button
       variant={variant}
       size={size}
-      onClick={copyToClipboard}
-      className={className}
-      type="button"
+      onClick={handleCopy}
+      className={cn('transition-all', className)}
+      {...props}
     >
-      <Copy className="h-4 w-4" />
+      {copied ? (
+        <Check className="h-4 w-4 text-green-500" />
+      ) : (
+        <Copy className="h-4 w-4" />
+      )}
     </Button>
   );
 } 

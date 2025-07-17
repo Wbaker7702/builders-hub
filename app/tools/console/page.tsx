@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { DocsPage, DocsBody, DocsTitle, DocsDescription } from 'fumadocs-ui/page';
+import { DocsPage, DocsBody, DocsTitle } from 'fumadocs-ui/page';
 import HomePage from "@/components/avalanche-console/HomePage";
 
 export const metadata: Metadata = {
@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Access APIs, manage keys, and configure webhooks for Avalanche development",
 };
 
-export default function ConsolePage() {
+export default function ConsoleDashboardPage() {
   return (
     <DocsPage>
       <DocsTitle>Dashboard</DocsTitle>

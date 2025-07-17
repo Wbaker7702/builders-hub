@@ -10,7 +10,7 @@ export interface ApiKey {
 // Webhook types
 export interface Webhook {
   id: string;
-  status: "active" | "inactive";
+  status: 'active' | 'inactive';
   url: string;
   chain: string;
   event: string;
@@ -19,8 +19,38 @@ export interface Webhook {
   created: string;
 }
 
-export interface NewWebhook {
-  network: "mainnet" | "testnet";
+// RPC Endpoint types
+export interface RpcEndpoint {
+  name: string;
+  type: 'HTTP' | 'WSS';
+  url: string;
+  network: 'mainnet' | 'testnet';
+  status: 'active' | 'maintenance';
+}
+
+// RPC Method types
+export interface RpcMethod {
+  value: string;
+  label: string;
+  description: string;
+}
+
+// Network types
+export interface Network {
+  value: string;
+  label: string;
+}
+
+// Token types
+export interface Token {
+  value: string;
+  label: string;
+  amount: string;
+}
+
+// Form types
+export interface WebhookFormData {
+  network: string;
   chain: string;
   eventType: string;
   name: string;
@@ -29,16 +59,16 @@ export interface NewWebhook {
   includeEventLogs: boolean;
 }
 
-// RPC Endpoint types
-export interface RpcEndpoint {
-  name: string;
-  url: string;
-  chainId: string;
-  network: "mainnet" | "testnet";
-  status: "operational" | "degraded" | "down";
-  description: string;
+// Common response types
+export interface ApiResponse<T> {
+  data: T;
+  error?: string;
+  success: boolean;
 }
 
-// Common types
-export type NetworkType = "mainnet" | "testnet";
-export type StatusType = "active" | "inactive" | "operational" | "degraded" | "down"; 
+// Pagination types
+export interface PaginationParams {
+  page: number;
+  pageSize: number;
+  total?: number;
+} 
