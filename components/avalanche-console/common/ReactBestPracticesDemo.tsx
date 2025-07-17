@@ -17,9 +17,9 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { AlertTriangle, CheckCircle, Loader2 } from 'lucide-react'
-import { usePerformance } from '@/hooks/usePerformance'
-import { useAsyncForm } from '@/components/forms/AsyncForm'
-import { withErrorBoundary } from '@/components/common/withErrorBoundary'
+import { usePerformance } from '../hooks/usePerformance'
+import { useAsyncForm } from '../forms/AsyncForm'
+import { withErrorBoundary } from '../common/withErrorBoundary'
 
 // ✅ Best Practice: Proper TypeScript interfaces
 interface BestPractice {
