@@ -136,38 +136,7 @@ export default function RpcEndpointsPage() {
             ))}
           </div>
 
-          {/* Quick Start Section */}
-          <div className="mt-8 space-y-4">
-            <Heading as="h2" className="flex items-center gap-2">
-              <Zap className="h-5 w-5" />
-              Quick Start
-            </Heading>
-            <div className="prose prose-sm max-w-none">
-              <p>To connect to Avalanche using these RPC endpoints:</p>
-              <ol>
-                <li>Choose the appropriate network (mainnet or testnet)</li>
-                <li>Copy the RPC URL for your desired chain</li>
-                <li>Configure your wallet or development environment with the RPC URL</li>
-                <li>Start building on Avalanche!</li>
-              </ol>
-            </div>
-          </div>
 
-          {/* Best Practices */}
-          <div className="mt-8 space-y-4">
-            <Heading as="h2" className="flex items-center gap-2">
-              <Globe className="h-5 w-5" />
-              Best Practices
-            </Heading>
-            <div className="prose prose-sm max-w-none">
-              <ul>
-                <li>Use rate limiting to avoid overwhelming the endpoints</li>
-                <li>Implement proper error handling and retry logic</li>
-                <li>Consider running your own node for production applications</li>
-                <li>Monitor endpoint status and have fallback options ready</li>
-              </ul>
-            </div>
-          </div>
         </div>
       </DocsBody>
     </DocsPage>
