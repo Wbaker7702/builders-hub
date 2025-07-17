@@ -1,0 +1,45 @@
+# Development files
+.git
+.github
+.vscode
+.idea
+*.log
+.DS_Store
+
+# Documentation
+*.md
+docs
+editing-guides
+policies
+
+# Test files
+__tests__
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+
+# Source maps
+*.map
+
+# Development dependencies
+.eslintrc*
+.prettierrc*
+jest.config.js
+
+# Local env files
+.env*.local
+
+# Cache directories
+.next/cache
+node_modules/.cache
+
+# Toolbox source (if built separately)
+toolbox/src
+toolbox/contracts
+
+# Load test files
+load-tests
+
+# Upcoming content
+upcoming_content 

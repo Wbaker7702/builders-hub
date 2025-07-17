@@ -1,15 +1,18 @@
 {
   "functions": {
     "app/**/*.tsx": {
-      "memory": 3008
+      "memory": 1024
     }
   },
   "buildCommand": "yarn build",
   "installCommand": "yarn install --frozen-lockfile",
   "build": {
     "env": {
-      "NODE_OPTIONS": "--max-old-space-size=7168",
-      "NEXT_TELEMETRY_DISABLED": "1"
+      "NODE_OPTIONS": "--max-old-space-size=4096",
+      "NEXT_TELEMETRY_DISABLED": "1",
+      "NEXT_SHARP_PATH": "./node_modules/sharp"
     }
-  }
+  },
+  "framework": "nextjs",
+  "outputDirectory": ".next"
 } 
