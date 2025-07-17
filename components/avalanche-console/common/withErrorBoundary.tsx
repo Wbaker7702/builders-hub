@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorBoundary } from '@/components/ui/error-boundary'
+import { ErrorBoundary } from '../ui/error-boundary'
 
 interface WithErrorBoundaryOptions {
   fallback?: React.ComponentType<{ error?: Error; resetError: () => void }>

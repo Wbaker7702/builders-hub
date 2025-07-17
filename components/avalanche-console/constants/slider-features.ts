@@ -1,4 +1,10 @@
-import type { FeatureSlide } from '@/components/ui/feature-slider'
+interface FeatureSlide {
+  id: string;
+  title: string;
+  description: string;
+  gradient: string;
+  codeExample: string;
+}
 
 export const dataApiFeatures: FeatureSlide[] = [
   {

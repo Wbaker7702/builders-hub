@@ -4,10 +4,10 @@ import {
   Globe,
   Activity,
 } from "lucide-react";
-import type { QuickAction, UsageStats, EndpointUsageData, SystemStatus } from "@/types/analytics";
+import type { QuickAction, UsageStats, EndpointUsageData, SystemStatus } from "../types/analytics";
 
 // Navigation items are now imported from the single source of truth
-export { navigationItems } from "./navigation";
+export { CONSOLE_NAVIGATION } from "./navigation";
 
 export const quickActions: QuickAction[] = [
   {
