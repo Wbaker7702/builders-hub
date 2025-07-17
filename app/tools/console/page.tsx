@@ -11,9 +11,9 @@ export default function ConsolePage() {
   return (
     <DocsPage>
       <DocsTitle>Dashboard</DocsTitle>
-      <DocsDescription>
+      <p className="text-lg text-fd-muted-foreground">
         Build, test, and deploy on Avalanche with comprehensive developer tools and APIs
-      </DocsDescription>
+      </p>
       <DocsBody className="not-prose" style={{ paddingTop: '0.5rem' }}>
         <HomePage />
       </DocsBody>

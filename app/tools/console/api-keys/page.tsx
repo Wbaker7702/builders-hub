@@ -79,9 +79,9 @@ export default function ApiKeysPage() {
   return (
     <DocsPage>
       <DocsTitle>API Keys</DocsTitle>
-      <DocsDescription>
+      <p className="text-lg text-fd-muted-foreground">
         Create and manage API keys for Avalanche services
-      </DocsDescription>
+      </p>
       <DocsBody className="not-prose" style={{ paddingTop: '0.5rem' }}>
         <div className="space-y-8">
           {/* Header */}

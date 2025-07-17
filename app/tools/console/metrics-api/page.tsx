@@ -18,9 +18,9 @@ export default function MetricsApiPage() {
   return (
     <DocsPage>
       <DocsTitle>Avalanche Metrics API</DocsTitle>
-      <DocsDescription>
+      <p className="text-lg text-fd-muted-foreground">
         Access comprehensive analytics and performance metrics for Avalanche networks
-      </DocsDescription>
+      </p>
       <DocsBody className="not-prose" style={{ paddingTop: '0.5rem' }}>
         <div className="space-y-8">
           {/* Base URL Section */}

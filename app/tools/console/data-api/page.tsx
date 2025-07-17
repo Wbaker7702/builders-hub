@@ -15,9 +15,9 @@ export default function DataApiPage() {
   return (
     <DocsPage>
       <DocsTitle>Avalanche Data API</DocsTitle>
-      <DocsDescription>
+      <p className="text-lg text-fd-muted-foreground">
         Powerful blockchain data access with enterprise-grade performance and security
-      </DocsDescription>
+      </p>
       <DocsBody className="not-prose" style={{ paddingTop: '0.5rem' }}>
         <div className="space-y-8">
           {/* Main Tabs */}

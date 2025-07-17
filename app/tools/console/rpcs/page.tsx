@@ -82,9 +82,9 @@ export default function RpcEndpointsPage() {
   return (
     <DocsPage>
       <DocsTitle>RPC Endpoints</DocsTitle>
-      <DocsDescription>
+      <p className="text-lg text-fd-muted-foreground">
         Access free mainnet and testnet RPC endpoints for Avalanche networks
-      </DocsDescription>
+      </p>
       <DocsBody className="not-prose" style={{ paddingTop: '0.5rem' }}>
         <div className="space-y-8">
           <Tabs value={activeTab} onValueChange={setActiveTab}>

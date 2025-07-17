@@ -121,9 +121,9 @@ export default function WebhooksPage() {
   return (
     <DocsPage>
       <DocsTitle>Avalanche Webhooks API</DocsTitle>
-      <DocsDescription>
+      <p className="text-lg text-fd-muted-foreground">
         Real-time blockchain event notifications with enterprise-grade reliability
-      </DocsDescription>
+      </p>
       <DocsBody className="not-prose" style={{ paddingTop: '0.5rem' }}>
 
         {/* Webhooks Management Section */}

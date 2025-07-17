@@ -60,12 +60,87 @@ export default function FaucetPage() {
   return (
     <DocsPage>
       <DocsTitle>Avalanche Faucet</DocsTitle>
-      <DocsDescription>
+      <p className="text-lg text-fd-muted-foreground">
         Request test tokens for development on Avalanche test networks
-      </DocsDescription>
+      </p>
       <DocsBody className="not-prose" style={{ paddingTop: '0.5rem' }}>
         <div className="space-y-8">
-          <Tabs items={['Javascript SDK', 'Python SDK', 'Go SDK', 'Curl', 'Python', 'GO']} defaultIndex={0}>
+          {/* Faucet Form */}
+          <Card>
+          <CardHeader>
+            <CardTitle>Request Tokens</CardTitle>
+            <CardDescription>
+              Get free test tokens for development on Avalanche test networks
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="network">Select Network</Label>
+                <Select value={selectedNetwork} onValueChange={setSelectedNetwork}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {networks.map((network) => (
+                      <SelectItem key={network.value} value={network.value}>
+                        {network.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="token">Select Token</Label>
+                <Select value={selectedToken} onValueChange={setSelectedToken}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {tokens.map((token) => (
+                      <SelectItem key={token.value} value={token.value}>
+                        {token.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="address">Address</Label>
+              <Input
+                id="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="0x..."
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="coupon">Coupon Code (optional)</Label>
+              <Input
+                id="coupon"
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+                placeholder="Enter coupon code"
+              />
+            </div>
+
+            <div className="pt-4">
+              <p className="text-sm text-muted-foreground mb-4">
+                Limit: You can request {tokenAmount} {tokenLabel} each day
+              </p>
+              <Button onClick={requestFunds} className="w-full">
+                Request {tokenAmount} {tokenLabel}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Code Examples */}
+        <Tabs items={['Javascript SDK', 'Python SDK', 'Go SDK', 'Curl', 'Python', 'GO']} defaultIndex={0}>
 
             <Tab>
               <p className="text-sm text-muted-foreground">
@@ -626,81 +701,7 @@ func main() {
             </Tab>
           </Tabs>
         </div>
-
-        {/* Faucet Form */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Request Tokens</CardTitle>
-            <CardDescription>
-              Get free test tokens for development on Avalanche test networks
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="network">Select Network</Label>
-                <Select value={selectedNetwork} onValueChange={setSelectedNetwork}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {networks.map((network) => (
-                      <SelectItem key={network.value} value={network.value}>
-                        {network.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="token">Select Token</Label>
-                <Select value={selectedToken} onValueChange={setSelectedToken}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {tokens.map((token) => (
-                      <SelectItem key={token.value} value={token.value}>
-                        {token.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="address">Address</Label>
-              <Input
-                id="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="0x..."
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="coupon">Coupon Code (optional)</Label>
-              <Input
-                id="coupon"
-                value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value)}
-                placeholder="Enter coupon code"
-              />
-            </div>
-
-            <div className="pt-4">
-              <p className="text-sm text-muted-foreground mb-4">
-                Limit: You can request {tokenAmount} {tokenLabel} each day
-              </p>
-              <Button onClick={requestFunds} className="w-full">
-                Request {tokenAmount} {tokenLabel}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </DocsBody>
+        </DocsBody>
     </DocsPage>
   )
 }
