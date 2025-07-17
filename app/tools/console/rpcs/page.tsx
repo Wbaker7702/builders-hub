@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Copy, Play, Loader2 } from "lucide-react"
-import { Tab, Tabs } from "fumadocs-ui/components/tabs"
+
 import { toast } from "sonner"
 import { Badge } from "@/components/ui/badge"
 import { DocsPage, DocsBody, DocsTitle, DocsDescription } from 'fumadocs-ui/page'
@@ -22,28 +22,28 @@ interface Endpoint {
 
 const endpoints: Endpoint[] = [
   {
-    name: "C-Chain RPC",
+    name: "HTTP Endpoint",
     type: "HTTP",
     url: "https://api.avax.network/ext/bc/C/rpc",
     network: "mainnet",
     status: "active"
   },
   {
-    name: "C-Chain WebSocket",
+    name: "WSS Endpoint",
     type: "WSS",
     url: "wss://api.avax.network/ext/bc/C/ws",
     network: "mainnet",
     status: "active"
   },
   {
-    name: "Fuji C-Chain RPC",
+    name: "HTTP Endpoint",
     type: "HTTP",
     url: "https://api.avax-test.network/ext/bc/C/rpc",
     network: "testnet",
     status: "active"
   },
   {
-    name: "Fuji C-Chain WebSocket",
+    name: "WSS Endpoint",
     type: "WSS",
     url: "wss://api.avax-test.network/ext/bc/C/ws",
     network: "testnet",
@@ -79,11 +79,6 @@ export default function RpcEndpointsPage() {
   const [customParams, setCustomParams] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [result, setResult] = useState<string>("")
-  const [activeTab, setActiveTab] = useState<"mainnet" | "testnet" | "all">("mainnet")
-
-  const filteredEndpoints = activeTab === "all" 
-    ? endpoints 
-    : endpoints.filter(endpoint => endpoint.network === activeTab)
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
@@ -154,42 +149,54 @@ export default function RpcEndpointsPage() {
               <CardDescription>Available network endpoints for blockchain interaction</CardDescription>
             </CardHeader>
             <CardContent>
-              <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)}>
-                <div className="grid w-full grid-cols-3 mb-4">
-                  <Tab value="mainnet">Mainnet</Tab>
-                  <Tab value="testnet">Testnet</Tab>
-                  <Tab value="all">All Networks</Tab>
-                </div>
-              </Tabs>
-
-              <div className="space-y-3">
-                {filteredEndpoints.map((endpoint, index) => (
-                  <div key={index} className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Badge variant={endpoint.type === "HTTP" ? "default" : "secondary"}>
-                          {endpoint.type}
-                        </Badge>
-                        <span className="text-sm font-medium">{endpoint.name}</span>
+              <div className="space-y-6">
+                {/* Mainnet Section */}
+                <div className="space-y-3">
+                  <h3 className="text-lg font-semibold">Mainnet</h3>
+                  {endpoints
+                    .filter(ep => ep.network === "mainnet")
+                    .map((endpoint, index) => (
+                      <div key={`mainnet-${index}`} className="space-y-1">
+                        <p className="text-sm font-medium text-muted-foreground">{endpoint.name}</p>
+                        <div className="flex items-center gap-2">
+                          <code className="flex-1 text-sm bg-muted px-3 py-2 rounded">
+                            {endpoint.url}
+                          </code>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            onClick={() => copyToClipboard(endpoint.url)}
+                          >
+                            <Copy className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </div>
-                      <Badge variant={endpoint.network === "mainnet" ? "default" : "outline"}>
-                        {endpoint.network}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <code className="flex-1 text-xs bg-muted px-2 py-1 rounded">
-                        {endpoint.url}
-                      </code>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        onClick={() => copyToClipboard(endpoint.url)}
-                      >
-                        <Copy className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+                    ))}
+                </div>
+
+                {/* Testnet Section */}
+                <div className="space-y-3">
+                  <h3 className="text-lg font-semibold">Testnet (Fuji)</h3>
+                  {endpoints
+                    .filter(ep => ep.network === "testnet")
+                    .map((endpoint, index) => (
+                      <div key={`testnet-${index}`} className="space-y-1">
+                        <p className="text-sm font-medium text-muted-foreground">{endpoint.name}</p>
+                        <div className="flex items-center gap-2">
+                          <code className="flex-1 text-sm bg-muted px-3 py-2 rounded">
+                            {endpoint.url}
+                          </code>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            onClick={() => copyToClipboard(endpoint.url)}
+                          >
+                            <Copy className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                </div>
               </div>
             </CardContent>
           </Card>
