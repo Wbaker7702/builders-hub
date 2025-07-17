@@ -13,18 +13,19 @@ import {
   Webhook,
   icons 
 } from 'lucide-react';
+import './console.css';
 
-// Create a flat page tree with all items at the same level
+// Create a page tree with sections for better organization
 const consoleTree = {
   name: "Console",
   children: [
     {
       type: "page" as const,
-      name: "Overview",
+      name: "Dashboard",
       url: "/tools/console",
       icon: createElement(LayoutDashboard, { className: "h-4 w-4" }),
       data: {
-        title: "Overview",
+        title: "Dashboard",
         description: "Avalanche Developer Console dashboard"
       }
     },
@@ -40,7 +41,7 @@ const consoleTree = {
     },
     {
       type: "separator" as const,
-      name: ""
+      name: "APIs"
     },
     {
       type: "page" as const,
@@ -74,16 +75,6 @@ const consoleTree = {
     },
     {
       type: "page" as const,
-      name: "Faucet",
-      url: "/tools/console/faucet",
-      icon: createElement(Droplet, { className: "h-4 w-4" }),
-      data: {
-        title: "Faucet",
-        description: "Request testnet tokens"
-      }
-    },
-    {
-      type: "page" as const,
       name: "RPC Endpoints",
       url: "/tools/console/rpcs",
       icon: createElement(Globe, { className: "h-4 w-4" }),
@@ -91,31 +82,47 @@ const consoleTree = {
         title: "RPC Endpoints",
         description: "Access RPC endpoints"
       }
+    },
+    {
+      type: "separator" as const,
+      name: "Tools"
+    },
+    {
+      type: "page" as const,
+      name: "Faucet",
+      url: "/tools/console/faucet",
+      icon: createElement(Droplet, { className: "h-4 w-4" }),
+      data: {
+        title: "Faucet",
+        description: "Request testnet tokens"
+      }
     }
   ]
 };
 
 export default function ConsoleLayout({ children }: { children: ReactNode }) {
   return (
-    <DocsLayout
-      tree={consoleTree}
-      nav={{
-        ...baseOptions.nav,
-        title: (
-          <>
-            <AvalancheLogo className="size-7" fill="currentColor" />
-            <span style={{ fontSize: "large" }}>Developer Console</span>
-          </>
-        ),
-        url: '/tools/console',
-      }}
-      links={[
-        academyMenu,
-        toolsMenu,
-        integrationsMenu
-      ]}
-    >
-      {children}
-    </DocsLayout>
+    <div className="avalanche-console-wrapper">
+      <DocsLayout
+        tree={consoleTree}
+        nav={{
+          ...baseOptions.nav,
+          title: (
+            <>
+              <AvalancheLogo className="size-7" fill="currentColor" />
+              <span style={{ fontSize: "large" }}>Developer Console</span>
+            </>
+          ),
+          url: '/tools/console',
+        }}
+        links={[
+          academyMenu,
+          toolsMenu,
+          integrationsMenu
+        ]}
+      >
+        {children}
+      </DocsLayout>
+    </div>
   );
 }

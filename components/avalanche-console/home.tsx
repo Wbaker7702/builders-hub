@@ -3,25 +3,15 @@ import React from "react"
 import { BarChart3, BookOpen, MessageCircle, FileText, HelpCircle } from "lucide-react"
 import { Card, Cards } from "fumadocs-ui/components/card"
 import { Heading } from "fumadocs-ui/components/heading"
+import { Separator } from "@/components/ui/separator"
 import { QuickActions } from "./dashboard/QuickActions"
 import { UsageStats } from "./dashboard/UsageStats"
 import { DeveloperResources } from "./dashboard/DeveloperResources"
-import { ResponsiveContainer } from "./ui/responsive-container"
 import { SectionErrorBoundary } from "./ui/error-boundary"
 
 export default function HomePage() {
   return (
-    <ResponsiveContainer className="space-y-12">
-      {/* Page Header */}
-      <div className="space-y-4">
-        <Heading as="h1" className="text-4xl font-bold">
-          Developer Console
-        </Heading>
-        <p className="text-lg text-muted-foreground">
-          Build, test, and deploy on Avalanche with comprehensive developer tools and APIs
-        </p>
-      </div>
-
+    <div className="space-y-12 [&>*:first-child]:mt-0">
       <SectionErrorBoundary name="QuickActions">
         <QuickActions />
       </SectionErrorBoundary>
@@ -29,7 +19,7 @@ export default function HomePage() {
       {/* API Usage Analytics */}
       <SectionErrorBoundary name="UsageAnalytics">
         <div className="space-y-6">
-          <Heading as="h2" className="flex items-center gap-3">
+          <Heading as="h2" className="flex items-center gap-3 text-2xl font-semibold">
             <BarChart3 className="h-6 w-6" />
             API Usage Analytics
           </Heading>
@@ -41,7 +31,7 @@ export default function HomePage() {
       {/* Developer Resources */}
       <SectionErrorBoundary name="DeveloperResources">
         <div className="space-y-6">
-          <Heading as="h2" className="flex items-center gap-3">
+          <Heading as="h2" className="flex items-center gap-3 text-2xl font-semibold">
             <BookOpen className="h-6 w-6" />
             Developer Resources
           </Heading>
@@ -50,15 +40,16 @@ export default function HomePage() {
         </div>
       </SectionErrorBoundary>
 
+      <Separator />
+
       {/* Support Section */}
       <SectionErrorBoundary name="SupportSection">
-        <div className="mt-12 pt-8 border-t border-border">
-          <div className="mb-6">
-            <Heading as="h2" className="flex items-center gap-3">
-              <HelpCircle className="h-6 w-6" />
-              Support
-            </Heading>
-          </div>
+        <div className="space-y-6">
+          <Heading as="h2" className="flex items-center gap-3 text-2xl font-semibold">
+            <HelpCircle className="h-6 w-6" />
+            Support
+          </Heading>
+          
           <Cards>
             <Card
               href="https://discord.gg/avalanche"
@@ -77,6 +68,6 @@ export default function HomePage() {
           </Cards>
         </div>
       </SectionErrorBoundary>
-    </ResponsiveContainer>
+    </div>
   )
 }

@@ -12,8 +12,10 @@ import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Copy, Plus, Settings, Trash2, X } from "lucide-react"
+import { Copy, Plus, Edit, Trash, X } from "lucide-react"
 import { toast } from "sonner"
+import { DocsPage, DocsBody, DocsTitle, DocsDescription } from 'fumadocs-ui/page'
+import { Heading } from "fumadocs-ui/components/heading"
 
 interface Webhook {
   id: string
@@ -117,21 +119,18 @@ export default function WebhooksPage() {
     : webhooks.filter(webhook => webhook.status === "active")
 
   return (
-    <div className="container mx-auto px-4 pt-16 pb-6 lg:px-8 lg:pt-20 lg:pb-8">
-      <div className="space-y-6">
-        {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Avalanche Webhooks API</h1>
-          <p className="text-muted-foreground mt-2">
-            Real-time blockchain event notifications with enterprise-grade reliability
-          </p>
-        </div>
+    <DocsPage>
+      <DocsTitle>Avalanche Webhooks API</DocsTitle>
+      <DocsDescription>
+        Real-time blockchain event notifications with enterprise-grade reliability
+      </DocsDescription>
+      <DocsBody className="not-prose" style={{ paddingTop: '0.5rem' }}>
 
         {/* Webhooks Management Section */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-semibold">Webhooks Management</h2>
+              <Heading as="h2">Webhooks Management</Heading>
               <p className="text-muted-foreground">
                 Configure webhook endpoints for blockchain events
               </p>
@@ -157,7 +156,7 @@ export default function WebhooksPage() {
                   <div className="space-y-6 py-4">
                     {/* Basic Configuration */}
                     <div className="space-y-4">
-                      <h3 className="text-lg font-semibold">Basic Configuration</h3>
+                      <Heading as="h3">Basic Configuration</Heading>
                       
                       {/* Network Selection */}
                       <div className="space-y-3">
@@ -248,7 +247,7 @@ export default function WebhooksPage() {
 
                     {/* Advanced Options */}
                     <div className="space-y-4">
-                      <h3 className="text-lg font-semibold">Advanced Options</h3>
+                      <Heading as="h3">Advanced Options</Heading>
                       
                       <div className="grid grid-cols-2 gap-6">
                         <div className="space-y-3">
@@ -378,7 +377,7 @@ export default function WebhooksPage() {
                                 onClick={() => toggleWebhookStatus(webhook.id)}
                                 className="h-8 w-8 p-0"
                               >
-                                <Settings className="h-4 w-4" />
+                                <Edit className="h-4 w-4" />
                               </Button>
                               <Button
                                 variant="ghost"
@@ -386,7 +385,7 @@ export default function WebhooksPage() {
                                 onClick={() => deleteWebhook(webhook.id)}
                                 className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
                               >
-                                <Trash2 className="h-4 w-4" />
+                                <Trash className="h-4 w-4" />
                               </Button>
                             </div>
                           </TableCell>
@@ -408,7 +407,7 @@ export default function WebhooksPage() {
             </TabsContent>
           </Tabs>
         </div>
-      </div>
-    </div>
+      </DocsBody>
+    </DocsPage>
   )
 }

@@ -1,0 +1,90 @@
+/* Custom styles for console sidebar - scoped to prevent interference with other docs */
+
+/* Ensure console styles don't affect other documentation */
+.avalanche-console-wrapper {
+  /* Isolated console context */
+}
+
+/* Reduce prose spacing in console pages */
+.avalanche-console-wrapper .prose {
+  margin-top: 0;
+}
+
+.avalanche-console-wrapper .prose > *:first-child {
+  margin-top: 0;
+}
+
+.avalanche-console-wrapper .prose > * + * {
+  margin-top: 1rem;
+}
+
+/* Override DocsBody default spacing */
+.avalanche-console-wrapper [data-docs-body] {
+  padding-top: 1rem;
+}
+
+/* Compact body styling for console pages */
+.console-body-compact {
+  padding-top: 1.5rem !important;
+}
+
+.console-body-compact.prose > *:first-child {
+  margin-top: 0 !important;
+}
+
+/* If DocsBody adds prose class, override its spacing */
+.console-body-compact.prose > * + *,
+.console-body-compact .prose > * + * {
+  margin-top: 1rem !important;
+}
+
+/* Ensure consistent spacing between sidebar items */
+.avalanche-console-wrapper .fd-sidebar-list > li {
+  margin-bottom: 0.125rem;
+}
+
+/* Style separator items */
+.avalanche-console-wrapper .fd-sidebar-list > li[data-separator="true"] {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--fd-muted-foreground);
+  padding-left: 0.75rem;
+}
+
+/* First separator doesn't need top margin */
+.avalanche-console-wrapper .fd-sidebar-list > li[data-separator="true"]:first-child {
+  margin-top: 0;
+}
+
+/* Ensure consistent padding for all sidebar links */
+.avalanche-console-wrapper .fd-sidebar-list a {
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+/* Active state styling */
+.avalanche-console-wrapper .fd-sidebar-list a[data-active="true"] {
+  background-color: var(--fd-accent);
+  color: var(--fd-accent-foreground);
+  font-weight: 500;
+}
+
+/* Hover state */
+.avalanche-console-wrapper .fd-sidebar-list a:hover:not([data-active="true"]) {
+  background-color: var(--fd-accent);
+  color: var(--fd-accent-foreground);
+}
+
+/* Icon styling */
+.avalanche-console-wrapper .fd-sidebar-list a svg {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+} 
