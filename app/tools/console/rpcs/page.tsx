@@ -1,142 +1,316 @@
 "use client"
-
-import { useState } from "react"
+import React, { useState } from "react"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Copy, Play, Loader2 } from "lucide-react"
 import { Tab, Tabs } from "fumadocs-ui/components/tabs"
-import { Copy, Globe, Zap } from "lucide-react"
 import { toast } from "sonner"
-import { Heading } from "fumadocs-ui/components/heading"
+import { Badge } from "@/components/ui/badge"
 import { DocsPage, DocsBody, DocsTitle, DocsDescription } from 'fumadocs-ui/page'
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { Separator } from "@/components/ui/separator"
 
-interface RpcEndpoint {
+interface Endpoint {
   name: string
+  type: "HTTP" | "WSS"
   url: string
-  chainId: string
   network: "mainnet" | "testnet"
-  status: "operational" | "degraded" | "down"
-  description: string
+  status: "active" | "maintenance"
 }
 
-const rpcEndpoints: RpcEndpoint[] = [
+const endpoints: Endpoint[] = [
   {
-    name: "Avalanche C-Chain Mainnet",
+    name: "C-Chain RPC",
+    type: "HTTP",
     url: "https://api.avax.network/ext/bc/C/rpc",
-    chainId: "43114",
     network: "mainnet",
-    status: "operational",
-    description: "Primary C-Chain RPC endpoint for mainnet"
+    status: "active"
   },
   {
-    name: "Avalanche C-Chain Testnet (Fuji)",
+    name: "C-Chain WebSocket",
+    type: "WSS",
+    url: "wss://api.avax.network/ext/bc/C/ws",
+    network: "mainnet",
+    status: "active"
+  },
+  {
+    name: "Fuji C-Chain RPC",
+    type: "HTTP",
     url: "https://api.avax-test.network/ext/bc/C/rpc",
-    chainId: "43113",
     network: "testnet",
-    status: "operational",
-    description: "C-Chain RPC endpoint for Fuji testnet"
+    status: "active"
   },
   {
-    name: "Avalanche X-Chain Mainnet",
-    url: "https://api.avax.network/ext/bc/X",
-    chainId: "X",
-    network: "mainnet",
-    status: "operational",
-    description: "X-Chain RPC endpoint for mainnet"
-  },
-  {
-    name: "Avalanche P-Chain Mainnet",
-    url: "https://api.avax.network/ext/bc/P",
-    chainId: "P",
-    network: "mainnet",
-    status: "operational",
-    description: "P-Chain RPC endpoint for mainnet"
+    name: "Fuji C-Chain WebSocket",
+    type: "WSS",
+    url: "wss://api.avax-test.network/ext/bc/C/ws",
+    network: "testnet",
+    status: "active"
   }
 ]
 
+const rpcMethods = [
+  { value: "eth_blockNumber", label: "eth_blockNumber", description: "Returns the number of most recent block" },
+  { value: "eth_chainId", label: "eth_chainId", description: "Returns the chain ID" },
+  { value: "eth_gasPrice", label: "eth_gasPrice", description: "Returns the current gas price" },
+  { value: "eth_getBalance", label: "eth_getBalance", description: "Returns the balance of an account" },
+  { value: "eth_getBlockByNumber", label: "eth_getBlockByNumber", description: "Returns block information by number" },
+  { value: "eth_getTransactionCount", label: "eth_getTransactionCount", description: "Returns the number of transactions sent from an address" },
+  { value: "net_version", label: "net_version", description: "Returns the current network ID" },
+  { value: "web3_clientVersion", label: "web3_clientVersion", description: "Returns the current client version" }
+]
+
+const defaultParams: Record<string, any> = {
+  eth_blockNumber: [],
+  eth_chainId: [],
+  eth_gasPrice: [],
+  eth_getBalance: ["0x8db97C7cEcE249c2b98bDC0226Cc4C2A57BF52FC", "latest"],
+  eth_getBlockByNumber: ["latest", true],
+  eth_getTransactionCount: ["0x8db97C7cEcE249c2b98bDC0226Cc4C2A57BF52FC", "latest"],
+  net_version: [],
+  web3_clientVersion: []
+}
+
 export default function RpcEndpointsPage() {
-  const [activeTab, setActiveTab] = useState("mainnet")
+  const [selectedNetwork, setSelectedNetwork] = useState<"mainnet" | "testnet">("mainnet")
+  const [selectedMethod, setSelectedMethod] = useState("eth_blockNumber")
+  const [customParams, setCustomParams] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [result, setResult] = useState<string>("")
+  const [activeTab, setActiveTab] = useState<"mainnet" | "testnet" | "all">("mainnet")
+
+  const filteredEndpoints = activeTab === "all" 
+    ? endpoints 
+    : endpoints.filter(endpoint => endpoint.network === activeTab)
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
-    toast.success("URL copied to clipboard!")
+    toast.success("Copied to clipboard!")
   }
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "operational":
-        return "bg-green-500"
-      case "degraded":
-        return "bg-yellow-500"
-      case "down":
-        return "bg-red-500"
-      default:
-        return "bg-gray-500"
+  const selectedMethodData = rpcMethods.find(m => m.value === selectedMethod)
+  const currentParams = customParams || JSON.stringify(defaultParams[selectedMethod] || [], null, 2)
+
+  const generateCurlCommand = () => {
+    const endpoint = endpoints.find(e => e.network === selectedNetwork && e.type === "HTTP")?.url || ""
+    const params = customParams || JSON.stringify(defaultParams[selectedMethod] || [])
+    
+    return `curl -X POST ${endpoint} \\
+-H "Content-Type: application/json" \\
+-d '{"jsonrpc": "2.0", "id": 1, "method": "${selectedMethod}", "params": ${params}}'`
+  }
+
+  const runRpcCall = async () => {
+    setIsLoading(true)
+    setResult("")
+    
+    try {
+      const endpoint = endpoints.find(e => e.network === selectedNetwork && e.type === "HTTP")?.url
+      if (!endpoint) throw new Error("No HTTP endpoint found")
+
+      let params
+      try {
+        params = customParams ? JSON.parse(customParams) : defaultParams[selectedMethod] || []
+      } catch (e) {
+        throw new Error("Invalid JSON in parameters")
+      }
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          id: 1,
+          method: selectedMethod,
+          params: params
+        })
+      })
+
+      const data = await response.json()
+      setResult(JSON.stringify(data, null, 2))
+    } catch (error) {
+      setResult(`Error: ${error instanceof Error ? error.message : "Unknown error"}`)
+    } finally {
+      setIsLoading(false)
     }
   }
 
-  const filteredEndpoints = activeTab === "all" 
-    ? rpcEndpoints 
-    : rpcEndpoints.filter(endpoint => endpoint.network === activeTab)
-
   return (
     <DocsPage>
-      <DocsTitle>RPC Endpoints</DocsTitle>
+      <DocsTitle>Avalanche RPC Endpoints</DocsTitle>
       <p className="text-lg text-fd-muted-foreground">
-        Access free mainnet and testnet RPC endpoints for Avalanche networks
+        Read and write to the blockchain with high uptime. API access is free, and rate limited at 50 RPS. To request an increase in rate limits, reach out in Discord.
       </p>
       <DocsBody className="not-prose" style={{ paddingTop: '0.5rem' }}>
         <div className="space-y-8">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <div className="grid w-full grid-cols-3">
-              <Tab value="mainnet">Mainnet</Tab>
-              <Tab value="testnet">Testnet</Tab>
-              <Tab value="all">All Networks</Tab>
-            </div>
-          </Tabs>
+          {/* RPC Endpoints Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle>RPC Endpoints</CardTitle>
+              <CardDescription>Available network endpoints for blockchain interaction</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)}>
+                <div className="grid w-full grid-cols-3 mb-4">
+                  <Tab value="mainnet">Mainnet</Tab>
+                  <Tab value="testnet">Testnet</Tab>
+                  <Tab value="all">All Networks</Tab>
+                </div>
+              </Tabs>
 
-          <div className="grid gap-4 mt-6">
-            {filteredEndpoints.map((endpoint, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="space-y-1">
-                      <CardTitle className="flex items-center gap-2">
-                        {endpoint.name}
-                        <Badge variant={endpoint.network === "mainnet" ? "default" : "secondary"}>
-                          {endpoint.network}
+              <div className="space-y-3">
+                {filteredEndpoints.map((endpoint, index) => (
+                  <div key={index} className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Badge variant={endpoint.type === "HTTP" ? "default" : "secondary"}>
+                          {endpoint.type}
                         </Badge>
-                      </CardTitle>
-                      <CardDescription>{endpoint.description}</CardDescription>
+                        <span className="text-sm font-medium">{endpoint.name}</span>
+                      </div>
+                      <Badge variant={endpoint.network === "mainnet" ? "default" : "outline"}>
+                        {endpoint.network}
+                      </Badge>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className={`h-2 w-2 rounded-full ${getStatusColor(endpoint.status)}`} />
-                      <span className="text-sm text-muted-foreground capitalize">{endpoint.status}</span>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                      <code className="text-sm">{endpoint.url}</code>
+                      <code className="flex-1 text-xs bg-muted px-2 py-1 rounded">
+                        {endpoint.url}
+                      </code>
                       <Button
+                        size="icon"
                         variant="ghost"
-                        size="sm"
                         onClick={() => copyToClipboard(endpoint.url)}
                       >
                         <Copy className="h-4 w-4" />
                       </Button>
                     </div>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span>Chain ID: <code className="text-foreground">{endpoint.chainId}</code></span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Separator />
+
+          {/* RPC Testing Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle>RPC Testing</CardTitle>
+              <CardDescription>Test EVM RPC methods directly from the browser</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Network</Label>
+                    <Select value={selectedNetwork} onValueChange={(v) => setSelectedNetwork(v as "mainnet" | "testnet")}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="mainnet">Mainnet</SelectItem>
+                        <SelectItem value="testnet">Testnet (Fuji)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>RPC Method</Label>
+                    <Select value={selectedMethod} onValueChange={setSelectedMethod}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {rpcMethods.map((method) => (
+                          <SelectItem key={method.value} value={method.value}>
+                            {method.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {selectedMethodData && (
+                    <div className="text-sm text-muted-foreground p-3 bg-muted rounded">
+                      {selectedMethodData.description}
+                    </div>
+                  )}
+
+                  <Separator />
+
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label>Generated cURL Command</Label>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => copyToClipboard(generateCurlCommand())}
+                      >
+                        <Copy className="h-4 w-4 mr-2" />
+                        Copy cURL
+                      </Button>
+                    </div>
+                    <pre className="text-xs bg-muted p-3 rounded overflow-x-auto">
+                      {generateCurlCommand()}
+                    </pre>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Custom Parameters (JSON)</Label>
+                    <Textarea
+                      placeholder={`Default: ${JSON.stringify(defaultParams[selectedMethod] || [])}`}
+                      value={customParams}
+                      onChange={(e) => setCustomParams(e.target.value)}
+                      className="font-mono text-sm"
+                      rows={4}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Leave empty to use default parameters, or provide custom JSON-RPC request body
+                    </p>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button onClick={runRpcCall} disabled={isLoading} className="flex-1">
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Running...
+                        </>
+                      ) : (
+                        <>
+                          <Play className="mr-2 h-4 w-4" />
+                          Run
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => copyToClipboard(result)}
+                      disabled={!result}
+                    >
+                      <Copy className="h-4 w-4 mr-2" />
+                      Copy Response
+                    </Button>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Result</Label>
+                    <div className="min-h-[200px] bg-muted rounded p-4">
+                      {result ? (
+                        <pre className="text-xs overflow-x-auto whitespace-pre-wrap">
+                          {result}
+                        </pre>
+                      ) : (
+                        <div className="flex items-center justify-center h-[200px] text-muted-foreground">
+                          No result yet. Select a method and click Run to execute.
+                        </div>
+                      )}
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            ))}
-          </div>
-
-
         </div>
       </DocsBody>
     </DocsPage>
