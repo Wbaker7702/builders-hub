@@ -32,12 +32,12 @@ export default function DataApiPage() {
                   <CardContent>
                     <div className="flex items-center gap-2">
                       <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">
-                        https://api.avax.network/data/v1
+                        https://glacier-api.avax.network/v1/chains
                       </code>
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() => copyToClipboard("https://api.avax.network/data/v1")}
+                        onClick={() => copyToClipboard("https://glacier-api.avax.network/v1/chains")}
                       >
                         <Copy className="h-4 w-4" />
                       </Button>
