@@ -14,6 +14,7 @@ import {
 import type { ReactNode } from "react";
 import "fumadocs-twoslash/twoslash.css";
 import { Popup, PopupContent, PopupTrigger } from "fumadocs-twoslash/ui";
+import { TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import YouTube from "@/components/content-design/youtube";
 import Gallery from "@/components/content-design/gallery";
 import { cn } from "@/utils/cn";
@@ -31,6 +32,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Popup,
     PopupContent,
     PopupTrigger,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
     pre: ({ title, className, icon, allowCopy, ...props }: CodeBlockProps) => (
       <CodeBlock title={title} icon={icon} allowCopy={allowCopy}>
         <Pre className={cn("max-h-[1200px]", className)} {...props} />
