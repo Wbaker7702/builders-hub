@@ -138,17 +138,9 @@ function CustomFaucet() {
 
 Request funds from the faucet programmatically
 
-<Tabs defaultValue="javascript">
-  <TabsList>
-    <TabsTrigger value="javascript">Javascript SDK</TabsTrigger>
-    <TabsTrigger value="python">Python SDK</TabsTrigger>
-    <TabsTrigger value="go">Go SDK</TabsTrigger>
-    <TabsTrigger value="curl">Curl</TabsTrigger>
-    <TabsTrigger value="python-requests">Python</TabsTrigger>
-    <TabsTrigger value="go-http">GO</TabsTrigger>
-  </TabsList>
+<Tabs items={['Javascript SDK', 'Python SDK', 'Go SDK', 'Curl', 'Python', 'GO']}>
 
-  <TabsContent value="javascript">
+  <Tab value="Javascript SDK">
     First, initialize a Node.js project, then install the Avalanche SDK.
 
     ```bash
@@ -188,9 +180,9 @@ Request funds from the faucet programmatically
 
     run();
     ```
-  </TabsContent>
+  </Tab>
 
-  <TabsContent value="python">
+  <Tab value="Python SDK">
     First, install the Avalanche Python SDK.
 
     ```bash
@@ -226,9 +218,9 @@ Request funds from the faucet programmatically
     import asyncio
     asyncio.run(request_faucet())
     ```
-  </TabsContent>
+  </Tab>
 
-  <TabsContent value="go">
+  <Tab value="Go SDK">
     First, install the Avalanche Go SDK.
 
     ```bash
@@ -280,9 +272,9 @@ Request funds from the faucet programmatically
         return nil
     }
     ```
-  </TabsContent>
+  </Tab>
 
-  <TabsContent value="curl">
+  <Tab value="Curl">
     Use curl to make direct HTTP requests to the faucet API:
 
     ```bash
@@ -300,9 +292,9 @@ Request funds from the faucet programmatically
         "id": 1
       }'
     ```
-  </TabsContent>
+  </Tab>
 
-  <TabsContent value="python-requests">
+  <Tab value="Python">
     Use Python's requests library to interact with the faucet:
 
     ```python
@@ -343,9 +335,9 @@ Request funds from the faucet programmatically
     your_address = "YOUR_ADDRESS_HERE"
     request_faucet_funds(your_address)
     ```
-  </TabsContent>
+  </Tab>
 
-  <TabsContent value="go-http">
+  <Tab value="GO">
     Use Go's net/http package to make faucet requests:
 
     ```go
@@ -409,5 +401,5 @@ Request funds from the faucet programmatically
         }
     }
     ```
-  </TabsContent>
+  </Tab>
 </Tabs>
