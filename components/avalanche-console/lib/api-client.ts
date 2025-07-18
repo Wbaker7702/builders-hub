@@ -1,5 +1,5 @@
 import { ApiError } from './api-error';
-import type { AsyncResult } from '@/types/common';
+import type { AsyncResult } from '../types/common';
 
 /**
  * Type-safe API client for making requests to the backend

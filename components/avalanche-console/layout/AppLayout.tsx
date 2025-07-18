@@ -13,14 +13,14 @@ import {
   SidebarTrigger,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeToggle } from "../theme-toggle";
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { cn } from "@/lib/utils";
-import { navigationItems } from "@/constants/navigation";
+import { NAVIGATION_ITEMS } from "../constants/navigation";
 import { ExternalLink, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { FeedbackModal } from "@/components/ui/feedback-modal";
+import { Feedback } from "@/components/ui/feedback";
 import Image from 'next/image';
 
 interface AppLayoutProps {
@@ -33,9 +33,9 @@ export const AppLayout = memo(function AppLayout({ children }: AppLayoutProps) {
 
   // Memoize navigation items to prevent unnecessary re-renders
   const navigationItemsWithActiveState = useMemo(() => {
-    return navigationItems.map(item => ({
+    return Object.values(NAVIGATION_ITEMS).map(item => ({
       ...item,
-      isActive: pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href))
+      isActive: pathname === item.url || (item.url !== "/" && pathname?.startsWith(item.url))
     }))
   }, [pathname])
 
@@ -46,6 +46,11 @@ export const AppLayout = memo(function AppLayout({ children }: AppLayoutProps) {
 
   const handleFeedbackModalClose = useCallback(() => {
     setIsFeedbackModalOpen(false)
+  }, [])
+
+  const handleRateAction = useCallback(async (url: string, feedback: any) => {
+    // Handle rating action - you can implement analytics or API calls here
+    console.log('URL:', url, 'Feedback:', feedback)
   }, [])
 
   return (
@@ -83,7 +88,7 @@ export const AppLayout = memo(function AppLayout({ children }: AppLayoutProps) {
                         )}
                       >
                         <Link 
-                          href={item.href}
+                          href={item.url}
                           className={cn(
                             "flex items-center gap-3 px-2 py-1.5 rounded-md w-full text-label-14 text-muted-foreground hover:text-foreground transition-colors",
                             item.isActive && "text-foreground font-medium"
@@ -165,9 +170,12 @@ export const AppLayout = memo(function AppLayout({ children }: AppLayoutProps) {
       </div>
       
       {/* Feedback Modal */}
-      <FeedbackModal
-        isOpen={isFeedbackModalOpen}
-        onClose={handleFeedbackModalClose}
+      <Feedback
+        onRateAction={handleRateAction}
+        path={pathname}
+        title="Avalanche Developer Console"
+        pagePath={pathname}
+        editUrl="https://github.com/avacloud-io/avalanche-console/edit/main/components/avalanche-console/layout/AppLayout.tsx"
       />
     </SidebarProvider>
   );

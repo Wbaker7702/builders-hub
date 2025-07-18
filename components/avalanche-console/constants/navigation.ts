@@ -8,7 +8,7 @@ import {
   Webhook,
 } from 'lucide-react';
 
-export const CONSOLE_NAVIGATION = {
+export const NAVIGATION_ITEMS = {
   dashboard: {
     name: "Dashboard",
     url: "/tools/console",

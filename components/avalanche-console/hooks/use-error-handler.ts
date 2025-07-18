@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { errorLogger } from '@/lib/error-logger';
+import { errorLogger } from '../lib/error-logger';
 import { useToast } from './use-toast';
 
 interface ErrorState {

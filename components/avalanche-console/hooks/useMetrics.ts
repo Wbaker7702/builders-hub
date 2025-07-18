@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { METRICS_API_BASE_URL, type MetricsResponse } from '@/constants/metrics';
+import { METRICS_API_BASE_URL, type MetricsResponse } from '../constants/metrics';
 
 interface MetricsParams {
   chainId: string;

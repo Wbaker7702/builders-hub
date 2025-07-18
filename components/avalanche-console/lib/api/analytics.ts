@@ -1,5 +1,5 @@
 import { apiClient } from '../api-client';
-import type { AsyncResult } from '@/types/common';
+import type { AsyncResult } from '../../types/common';
 
 export interface ApiUsageData {
   date: string;

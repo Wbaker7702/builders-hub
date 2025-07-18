@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { analyticsService } from '@/lib/api';
-import type { UsageMetrics, ApiUsageData, EndpointUsage } from '@/lib/api/analytics';
+import { analyticsService } from '../lib/api';
+import type { UsageMetrics, ApiUsageData, EndpointUsage } from '../lib/api/analytics';
 
 interface UseAnalyticsOptions {
   timeRange?: '24h' | '7d' | '30d' | '90d';

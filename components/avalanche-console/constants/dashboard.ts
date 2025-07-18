@@ -7,7 +7,7 @@ import {
 import type { QuickAction, UsageStats, EndpointUsageData, SystemStatus } from "../types/analytics";
 
 // Navigation items are now imported from the single source of truth
-export { CONSOLE_NAVIGATION } from "./navigation";
+export { NAVIGATION_ITEMS } from "./navigation";
 
 export const quickActions: QuickAction[] = [
   {

@@ -7,6 +7,8 @@ export const layoutStyles = {
   cardSpacing: "space-y-4", 
   fieldSpacing: "space-y-4",
   inputSpacing: "space-y-2",
+  pageContainer: "p-4",
+  pageHeader: "flex items-center justify-between mb-4",
   
   // Use Fumadocs' standard grid patterns
   quickActionsGrid: "grid grid-cols-1 md:grid-cols-2 gap-4",

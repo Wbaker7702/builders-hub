@@ -1,5 +1,5 @@
 import React from 'react';
-import { layoutStyles } from '@/lib/styles';
+import { layoutStyles } from '../lib/styles';
 
 interface StandardPageLayoutProps {
   children: React.ReactNode;
