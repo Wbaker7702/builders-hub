@@ -44,7 +44,7 @@ export const fixGitHubMarkdown: TransformFunction = (content) => {
     .replace(/^!!!\s+(\w+)\s*\n/gm, ':::$1\n')
     .replace(/^!!\s+(\w+)\s*\n/gm, '::$1\n')
     .replace(/^!([^[{].*?)$/gm, '$1')
-    .replace(/<!--(.*?)-->/g, '{/* $1 */}');
+    .replace(/<!--(.*?)-->/gs, '{/* $1 */}');
 };
 
 export const fixMalformedHTML: TransformFunction = (content) => {
