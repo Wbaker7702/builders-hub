@@ -51,8 +51,13 @@ export function replaceRelativeLinks(content: string, sourceBaseUrl: string): st
   
   function convertGitHubBlobToRaw(url: string): string {
     // Convert GitHub blob URLs to raw URLs for direct access
-    if (url.includes('github.com') && url.includes('/blob/')) {
-      return url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
+    try {
+      const parsedUrl = new URL(url);
+      if (parsedUrl.hostname === 'github.com' && parsedUrl.pathname.includes('/blob/')) {
+        return url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
+      }
+    } catch (e) {
+      // If URL construction fails, fallback to original url
     }
     return url;
   }
