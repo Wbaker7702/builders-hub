@@ -87,7 +87,10 @@ export const mdxifyStyleTags: TransformFunction = (content) => {
       return match;
     }
     // Otherwise, wrap it
-    const escapedCss = css.replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
+    const escapedCss = css
+      .replace(/\\/g, '\\\\')
+      .replace(/`/g, '\\`')
+      .replace(/\$\{/g, '\\${');
     return `<style>{\`${escapedCss}\`}</style>`;
   });
 };
