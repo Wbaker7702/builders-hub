@@ -1,5 +1,13 @@
 import React from "react";
 
+function getURLHost(url: string): string | null {
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return null;
+  }
+}
+
 function convertToEmbed(url: string): string {
   const youtubeRegex =
     /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
@@ -23,8 +31,18 @@ type Props = {
 };
 
 export default function VideoRenderer({ link }: Props) {
-  const isYouTube = link.includes("youtube.com") || link.includes("youtu.be");
-  const isLoom = link.includes("loom.com");
+  const host = getURLHost(link);
+  const youtubeHosts = [
+    "youtube.com",
+    "www.youtube.com",
+    "youtu.be",
+  ];
+  const loomHosts = [
+    "loom.com",
+    "www.loom.com",
+  ];
+  const isYouTube = host !== null && youtubeHosts.includes(host);
+  const isLoom = host !== null && loomHosts.includes(host);
 
   if (isYouTube || isLoom) {
     return (
