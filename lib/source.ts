@@ -1,9 +1,12 @@
-import { loader } from 'fumadocs-core/source';
+import { createMDXSource } from 'fumadocs-mdx/runtime/next';
+import {
+  type InferMetaType,
+  type InferPageType,
+  loader,
+} from 'fumadocs-core/source';
 import { createElement } from 'react';
 import { icons } from 'lucide-react';
-import { createMDXSource } from 'fumadocs-mdx';
-import { meta, docs, guide as guides, course, courseMeta, integrations } from '@/.source';
-import type { InferMetaType, InferPageType } from 'fumadocs-core/source';
+import { meta, docs, blog as blogs, course, courseMeta, integrations, codebaseEntrepreneur, codebaseEntrepreneurMeta } from '@/.source';
 
 export const documentation = loader({
   baseUrl: '/docs',
@@ -11,7 +14,7 @@ export const documentation = loader({
     if (icon && icon in icons)
       return createElement(icons[icon as keyof typeof icons]);
   },
-  source: createMDXSource(docs, meta),
+  source: createMDXSource(docs, meta as any),
 });
 
 export const academy = loader({
@@ -20,12 +23,21 @@ export const academy = loader({
     if (icon && icon in icons)
       return createElement(icons[icon as keyof typeof icons]);
   },
-  source: createMDXSource(course, courseMeta),
+  source: createMDXSource(course, courseMeta as any),
 });
 
-export const guide = loader({
-  baseUrl: '/guides',
-  source: createMDXSource(guides, []),
+export const codebaseEntrepreneurAcademy = loader({
+  baseUrl: '/codebase-entrepreneur-academy',
+  icon(icon) {
+    if (icon && icon in icons)
+      return createElement(icons[icon as keyof typeof icons]);
+  },
+  source: createMDXSource(codebaseEntrepreneur, codebaseEntrepreneurMeta as any),
+});
+
+export const blog = loader({
+  baseUrl: '/blog',
+  source: createMDXSource(blogs, []),
 });
 
 export const integration = loader({

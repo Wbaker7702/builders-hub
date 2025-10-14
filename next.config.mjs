@@ -36,6 +36,10 @@ const config = {
         protocol: 'https',
         hostname: 'images.ctfassets.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.prod.website-files.com',
+      },
     ],
   },
   async rewrites() {
@@ -61,6 +65,16 @@ const config = {
   async redirects() {
     return [
       {
+        source: '/codebase-entrepreneur',
+        destination: '/codebase-entrepreneur-academy',
+        permanent: true,
+      },
+      {
+        source: '/codebase-entrepreneur/:path*',
+        destination: '/codebase-entrepreneur-academy/:path*',
+        permanent: true,
+      },
+      {
         source: '/hackathon',
         destination: '/hackathons/26bfce9b-4d44-4d40-8fbe-7903e76d48fa',
         permanent: true,
@@ -70,7 +84,21 @@ const config = {
         destination: '/academy/avalanche-fundamentals/04-creating-an-l1/01-creating-an-l1',
         permanent: true,
       },
-      // Redirects from old VM paths
+      {
+        source: '/tools/:path*',
+        destination: '/console',
+        permanent: true,
+      },
+      {
+        source: '/guides',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/guides/:path*',
+        destination: '/blog/:path*',
+        permanent: true,
+      },
       {
         source: '/docs/virtual-machines/default-precompiles/index',
         destination: '/docs/avalanche-l1s/evm-configuration/evm-l1-customization#precompiles',
@@ -233,7 +261,41 @@ const config = {
         source: "/docs/tooling/avalanche-cli",
         destination: "/docs/tooling/cli-commands",
         permanent: true,
-      }
+      }, {
+        source: "/academy/l1-validator-management",
+        destination: "/academy/permissioned-l1s",
+        permanent: true,
+      },
+      {
+        source: "/console/permissioned-l1s/transactor-allowlist",
+        destination: "/console/l1-access-restrictions/transactor-allowlist",
+        permanent: true,
+      },
+      {
+        source: "/console/permissioned-l1s/deployer-allowlist",
+        destination: "/console/l1-access-restrictions/deployer-allowlist",
+        permanent: true,
+      },
+      {
+        source: "/docs/nodes/configure/chain-configs/p-chain",
+        destination: "/docs/nodes/chain-configs/p-chain",
+        permanent: true,
+      },
+      {
+        source: "/docs/nodes/configure/chain-configs/x-chain",
+        destination: "/docs/nodes/chain-configs/x-chain",
+        permanent: true,
+      },
+      {
+        source: "/docs/nodes/configure/chain-configs/c-chain",
+        destination: "/docs/nodes/chain-configs/c-chain",
+        permanent: true,
+      },
+      {
+        source: "/docs/nodes/configure/chain-configs/subnet-evm",
+        destination: "/docs/nodes/chain-configs/subnet-evm",
+        permanent: true,
+      },
     ];
   },
 };

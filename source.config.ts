@@ -40,8 +40,8 @@ export const course = defineCollections({
         context.addIssue({ code: z.ZodIssueCode.custom, message: "Invalid date" });
         return z.NEVER;
       }
-    }),
-    authors: z.array(z.string()),
+    }).optional(),
+    authors: z.array(z.string()).optional(),
     comments: z.boolean().default(false),
   }),
 });
@@ -54,12 +54,39 @@ export const courseMeta = defineCollections({
   }),
 });
 
+export const codebaseEntrepreneur = defineCollections({
+  type: 'doc',
+  dir: 'content/codebase-entrepreneur',
+  schema: frontmatterSchema.extend({
+    preview: z.string().optional(),
+    index: z.boolean().default(false),
+    updated: z.string().or(z.date()).transform((value, context) => {
+      try {
+        return new Date(value);
+      } catch {
+        context.addIssue({ code: z.ZodIssueCode.custom, message: "Invalid date" });
+        return z.NEVER;
+      }
+    }).optional(),
+    authors: z.array(z.string()).optional(),
+    comments: z.boolean().default(false),
+  }),
+});
+
+export const codebaseEntrepreneurMeta = defineCollections({
+  type: 'meta',
+  dir: 'content/codebase-entrepreneur',
+  schema: metaSchema.extend({
+    description: z.string().optional(),
+  }),
+});
+
 export const integrations = defineCollections({
   type: 'doc',
   async: true,
   dir: 'content/integrations',
   schema: frontmatterSchema.extend({
-    category: z.string(),
+    category: z.union([z.string(), z.array(z.string())]),
     available: z.array(z.string()).optional(),
     logo: z.string().optional(),
     developer: z.string().optional(),
@@ -70,12 +97,12 @@ export const integrations = defineCollections({
   }),
 });
 
-export const guide = defineCollections({
+export const blog = defineCollections({
   type: 'doc',
-  dir: 'content/guides',
+  dir: 'content/blog',
   schema: frontmatterSchema.extend({
-    authors: z.array(z.string()),
-    topics: z.array(z.string()),
+    authors: z.array(z.string()).optional(),
+    topics: z.array(z.string()).optional(),
     date: z.string().date().or(z.date()).optional(),
     comments: z.boolean().default(false),
   }),
