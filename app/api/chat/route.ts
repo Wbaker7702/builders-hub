@@ -305,7 +305,7 @@ function searchContent(query: string, sections: Array<{ id: string; title: strin
         const termResults = lunrIndex!.search(`${term} ${term}*`);
         lunrResults.push(...termResults);
       } catch (e) {
-        console.warn(`Failed to search for term ${term}:`, e);
+        console.warn('Failed to search for term:', term, e);
       }
     });
     
