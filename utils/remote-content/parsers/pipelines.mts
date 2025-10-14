@@ -169,7 +169,10 @@ export const convertMermaidBlocks: TransformFunction = (content) => {
   // Convert standard Mermaid code blocks to <Mermaid> component format
   return content.replace(/```mermaid\n([\s\S]*?)\n```/g, (match, diagramContent) => {
     // Escape backticks in the diagram content for the template literal
-    const escapedContent = diagramContent.replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
+    const escapedContent = diagramContent
+      .replace(/\\/g, '\\\\')
+      .replace(/`/g, '\\`')
+      .replace(/\$\{/g, '\\${');
     
     // Return the Mermaid component with the diagram content
     return `<Mermaid chart={\`${escapedContent}\`} />`;
