@@ -6,7 +6,9 @@ export const runtime = 'edge';
 
 export async function GET(
   request: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
 ): Promise<ImageResponse> {
+  const { slug } = await params;
   const { searchParams } = request.nextUrl;
   const rawTitle = searchParams.get('title');
   // Remove the suffix if present
