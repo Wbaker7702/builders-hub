@@ -72,13 +72,8 @@ export function replaceRelativeLinks(content: string, sourceBaseUrl: string): st
           markdownLink.startsWith("#") ||
           markdownLink.startsWith("mailto:")
         ) {
-          // Convert GitHub blob URLs to raw URLs for images
-          if (markdownLink.includes('github.com') && markdownLink.includes('/blob/') && 
-              (markdownLink.toLowerCase().endsWith('.png') || 
-               markdownLink.toLowerCase().endsWith('.jpg') || 
-               markdownLink.toLowerCase().endsWith('.jpeg') || 
-               markdownLink.toLowerCase().endsWith('.gif') || 
-               markdownLink.toLowerCase().endsWith('.svg'))) {
+          // Convert GitHub blob URLs to raw URLs for all file types
+          if (markdownLink.includes('github.com') && markdownLink.includes('/blob/')) {
             return `[${text}](${convertGitHubBlobToRaw(markdownLink)})`;
           }
           return match;
