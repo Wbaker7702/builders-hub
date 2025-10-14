@@ -32,8 +32,20 @@ export async function DELETE(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const fileName = searchParams.get('fileName');
   const url = searchParams.get('url');
+
+  // Validate fileName to prevent SSRF and path traversal
+  // Allow only base file names like "myfile.txt", no slashes or directory traversal, and required to have an extension
+  const isValidFileName = fileName && /^[\w,\s-]+\.[A-Za-z0-9]{1,8}$/.test(fileName) && !fileName.includes('..') && !fileName.includes('/') && !fileName.includes('\\');
+
   if (url){
     return NextResponse.json({message: 'URL delete is not supported'})
+  }
+
+  if (!isValidFileName && !url) {
+    return NextResponse.json(
+      { error: 'A valid fileName or URL is required' },
+      { status: 400 }
+    );
   }
 
   if (!fileName && !url) {
