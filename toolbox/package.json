@@ -28,6 +28,8 @@
   "dependencies": {
     "@avalabs/avacloud-sdk": "^0.12.1",
     "@avalabs/avalanchejs": "^4.1.2-alpha.4",
+    "@noble/curves": "^1.9.7",
+    "@noble/hashes": "^1.8.0",
     "@radix-ui/react-alert-dialog": "^1.1.13",
     "@radix-ui/react-checkbox": "^1.2.3",
     "@radix-ui/react-dialog": "^1.1.11",
@@ -52,7 +54,7 @@
     "react-syntax-highlighter": "^15.6.1",
     "recharts": "^2.15.1",
     "tailwind-merge": "^3.0.1",
-    "viem": "^2.23.0",
+    "viem": "^2.22.9",
     "vitest": "^3.0.5",
     "zod": "^3.24.2",
     "zustand": "^5.0.3"

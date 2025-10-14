@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     
     form.flatten();
     const pdfBytes = await pdfDoc.save();
-    return new NextResponse(pdfBytes, {
+    return new NextResponse(pdfBytes.buffer, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',

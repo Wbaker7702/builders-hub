@@ -27,6 +27,8 @@
     "@next/mdx": "^15.2.2",
     "@next/third-parties": "^15.2.2",
     "@noble/bls12-381": "^1.4.0",
+    "@noble/curves": "^1.9.7",
+    "@noble/hashes": "^1.8.0",
     "@noble/secp256k1": "^2.2.3",
     "@prisma/client": "^6.4.1",
     "@radix-ui/react-accordion": "^1.2.3",
@@ -120,7 +122,7 @@
     "twoslash": "^0.3.1",
     "uuid": "^11.0.3",
     "vaul": "^1.1.2",
-    "viem": "^2.22.9",
+    "viem": "2.22.9",
     "vitest": "^2.1.9",
     "wagmi": "^2.14.8",
     "zod": "^3.24.2",
@@ -140,6 +142,10 @@
     "tailwindcss": "^4.0.9",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.8.2"
+  },
+  "resolutions": {
+    "@noble/hashes": "^1.8.0",
+    "@noble/curves": "^1.9.7"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

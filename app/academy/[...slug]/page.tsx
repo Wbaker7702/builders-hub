@@ -36,40 +36,40 @@ import Mermaid from "@/components/content-design/mermaid";
 import { Feedback } from '@/components/ui/feedback';
 import posthog from 'posthog-js';
 
-import ToolboxMdxWrapper from "@/toolbox/src/components/ToolboxMdxWrapper"
-import CrossChainTransfer from "@/toolbox/src/components/CrossChainTransfer"
-import AvalancheGoDocker from '@/toolbox/src/toolbox/Nodes/AvalancheGoDockerL1';
-import CreateSubnet from "@/toolbox/src/toolbox/L1/CreateSubnet"
-import CreateChain from "@/toolbox/src/toolbox/L1/CreateChain"
-import ConvertToL1 from "@/toolbox/src/toolbox/L1/ConvertToL1"
-import GenesisBuilder from '@/toolbox/src/toolbox/L1/GenesisBuilder';
-import DeployExampleERC20 from '@/toolbox/src/toolbox/ICTT/DeployExampleERC20';
-import DeployTokenHome from '@/toolbox/src/toolbox/ICTT/DeployTokenHome';
-import DeployERC20TokenRemote from '@/toolbox/src/toolbox/ICTT/DeployERC20TokenRemote';
-import RegisterWithHome from '@/toolbox/src/toolbox/ICTT/RegisterWithHome';
-import TestSend from '@/toolbox/src/toolbox/ICTT/TestSend';
-import TeleporterRegistry from '@/toolbox/src/toolbox/ICM/TeleporterRegistry';
-import ICMRelayer from '@/toolbox/src/toolbox/ICM/ICMRelayer';
-import Faucet from '@/toolbox/src/toolbox/Wallet/Faucet';
+// import ToolboxMdxWrapper from "@/toolbox/src/components/ToolboxMdxWrapper"
+// import CrossChainTransfer from "@/toolbox/src/components/CrossChainTransfer"
+// import AvalancheGoDocker from '@/toolbox/src/toolbox/Nodes/AvalancheGoDockerL1';
+// import CreateSubnet from "@/toolbox/src/toolbox/L1/CreateSubnet"
+// import CreateChain from "@/toolbox/src/toolbox/L1/CreateChain"
+// import ConvertToL1 from "@/toolbox/src/toolbox/L1/ConvertToL1"
+// import GenesisBuilder from '@/toolbox/src/toolbox/L1/GenesisBuilder';
+// import DeployExampleERC20 from '@/toolbox/src/toolbox/ICTT/DeployExampleERC20';
+// import DeployTokenHome from '@/toolbox/src/toolbox/ICTT/DeployTokenHome';
+// import DeployERC20TokenRemote from '@/toolbox/src/toolbox/ICTT/DeployERC20TokenRemote';
+// import RegisterWithHome from '@/toolbox/src/toolbox/ICTT/RegisterWithHome';
+// import TestSend from '@/toolbox/src/toolbox/ICTT/TestSend';
+// import TeleporterRegistry from '@/toolbox/src/toolbox/ICM/TeleporterRegistry';
+// import ICMRelayer from '@/toolbox/src/toolbox/ICM/ICMRelayer';
+// import Faucet from '@/toolbox/src/toolbox/Wallet/Faucet';
 
 export const dynamicParams = false;
 
 const toolboxComponents = {
-  ToolboxMdxWrapper,
-  CrossChainTransfer,
-  CreateSubnet,
-  GenesisBuilder,
-  CreateChain,
-  AvalancheGoDocker,
-  ConvertToL1,
-  DeployExampleERC20,
-  DeployTokenHome,
-  DeployERC20TokenRemote,
-  RegisterWithHome,
-  TestSend,
-  TeleporterRegistry,
-  ICMRelayer,
-  Faucet
+  // ToolboxMdxWrapper,
+  // CrossChainTransfer,
+  // CreateSubnet,
+  // GenesisBuilder,
+  // CreateChain,
+  // AvalancheGoDocker,
+  // ConvertToL1,
+  // DeployExampleERC20,
+  // DeployTokenHome,
+  // DeployERC20TokenRemote,
+  // RegisterWithHome,
+  // TestSend,
+  // TeleporterRegistry,
+  // ICMRelayer,
+  // Faucet
 }
 
 export default async function Page(props: {

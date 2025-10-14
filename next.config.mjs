@@ -9,6 +9,7 @@ const config = {
     'ts-morph',
     'typescript',
     'twoslash',
+    'viem',
   ],
   env: {
     APIKEY: process.env.APIKEY,

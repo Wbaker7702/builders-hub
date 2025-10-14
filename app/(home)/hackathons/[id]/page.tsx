@@ -26,10 +26,16 @@ export const revalidate = 60;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  const { hackathons } = await getFilteredHackathons({});
-  return hackathons.map((hackathon) => ({
-    id: hackathon.id,
-  }));
+  try {
+    const { hackathons } = await getFilteredHackathons({});
+    return hackathons.map((hackathon) => ({
+      id: hackathon.id,
+    }));
+  } catch (error) {
+    console.warn('Failed to generate static params for hackathons:', error);
+    // Return empty array if database is not available during build
+    return [];
+  }
 }
 
 export default async function HackathonPage({

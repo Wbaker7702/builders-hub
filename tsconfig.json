@@ -40,6 +40,7 @@
     ".next/types/**/*.ts"
 , "utils/remote-content.mts"  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "toolbox"
   ]
 }
