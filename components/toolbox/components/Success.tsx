@@ -26,7 +26,7 @@ export const Success = ({ label, value, isTestnet = true, xpChain = "P" }: Succe
     
     const getExplorerUrl = () => {
         if (isPChainTxId) {
-            return `${baseUrl}/${xpChain === "P" ? "p-chain" : "c-chain"}/tx/${value}`;
+            return `${baseUrl}/${xpChain === "P" ? "p-chain" : "c-chain"}/tx/${encodeURIComponent(value)}`;
         }
         return null;
     };
