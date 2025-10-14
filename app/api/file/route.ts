@@ -34,8 +34,14 @@ export async function DELETE(request: NextRequest) {
   const url = searchParams.get('url');
 
   // Validate fileName to prevent SSRF and path traversal
-  // Allow only base file names like "myfile.txt", no slashes or directory traversal, and required to have an extension
-  const isValidFileName = fileName && /^[\w,\s-]+\.[A-Za-z0-9]{1,8}$/.test(fileName) && !fileName.includes('..') && !fileName.includes('/') && !fileName.includes('\\');
+  // Allow only strict base file names like "myfile.txt", no slashes, no dots except one for the extension, no whitespace, 3-32 chars total, extension 2-8 chars
+  const isValidFileName = (
+    typeof fileName === 'string' &&
+    /^[a-zA-Z0-9_-]{1,24}\.[a-zA-Z0-9]{2,8}$/.test(fileName) && // only alphanumerics, underscore, dash, and one dot for extension
+    !fileName.includes('/') &&
+    !fileName.includes('\\') &&
+    !fileName.includes('..')
+  );
 
   if (url){
     return NextResponse.json({message: 'URL delete is not supported'})
@@ -56,7 +62,15 @@ export async function DELETE(request: NextRequest) {
   }
 
   try {
-    const blobExists = await fetch(`${process.env.BLOB_BASE_URL}/${fileName}`, {
+    // Defensive: Ensure BLOB_BASE_URL is safe and matches expected value (optional, but recommended)
+    const allowedBlobBase = process.env.BLOB_BASE_URL;
+    if (!allowedBlobBase || !/^https:\/\/[a-zA-Z0-9.-]+(\:[0-9]+)?\/?$/.test(allowedBlobBase)) {
+      throw new Error('Internal configuration error: invalid BLOB_BASE_URL');
+    }
+
+    // Construct the URL safely
+    const fetchUrl = `${allowedBlobBase.replace(/\/$/, '')}/${encodeURIComponent(fileName)}`;
+    const blobExists = await fetch(fetchUrl, {
       method: 'HEAD',
     }).then(res => res.ok).catch(() => false);
 
