@@ -73,8 +73,16 @@ export function replaceRelativeLinks(content: string, sourceBaseUrl: string): st
           markdownLink.startsWith("mailto:")
         ) {
           // Convert GitHub blob URLs to raw URLs for all file types
-          if (markdownLink.includes('github.com') && markdownLink.includes('/blob/')) {
-            return `[${text}](${convertGitHubBlobToRaw(markdownLink)})`;
+          try {
+            const parsedLinkUrl = new URL(markdownLink);
+            if (
+              parsedLinkUrl.hostname === 'github.com' &&
+              parsedLinkUrl.pathname.includes('/blob/')
+            ) {
+              return `[${text}](${convertGitHubBlobToRaw(markdownLink)})`;
+            }
+          } catch (e) {
+            // If URL can't be parsed, fall through and leave match unchanged
           }
           return match;
         }
