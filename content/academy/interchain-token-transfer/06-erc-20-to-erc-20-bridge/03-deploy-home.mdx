@@ -7,26 +7,33 @@ icon: Terminal
 ---
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-
-We will deploy two Avalanche Interchain Token Transfer contracts. One of the source chain (which is C-chain in our case) and another on the destination chain (myblockchain in our case).
+We will deploy two Avalanche Interchain Token Transfer contracts. One on the source chain (which is C-chain in our case) and another on the destination chain (Echo in our case).
 
 <Steps>
 <Step>
-
 ### Deploy ERC20Home Contract
 
-```bash
-forge create --rpc-url local-c --private-key $PK lib/avalanche-interchain-token-transfer/contracts/src/TokenHome/ERC20TokenHome.sol:ERC20TokenHome --constructor-args $TELEPORTER_REGISTRY_C_CHAIN $FUNDED_ADDRESS $ERC20_C_CHAIN 18 --broadcast
-```
+Since we're covering an ERC20 > ERC20 bridge, make sure to set the Transferrer type to "ERC20" and input the ERC20 token address you previously deployed in the token address field. Then deploy the ERC20Home contract on the Fuji testnet using our toolbox:
+
+<Callout>
+Make sure you have:
+1. Deployed your ERC-20 token (from [Deploy ERC-20 Token](/academy/interchain-token-transfer/06-erc-20-to-erc-20-bridge/02-deploy-erc-20-token))
+2. Have enough test AVAX for gas fees
+</Callout>
+
+<ToolboxMdxWrapper enforceChainId={43113}>
+    <DeployTokenHome />
+</ToolboxMdxWrapper>
 
 </Step>
-<Step>
 
+<Step>
 ### Save the ERC-20 Home Address
 
-```bash
-export ERC20_HOME_C_CHAIN=<"Deployed to" address>
-```
+After deployment, you'll need to save the contract address for future steps. You can find it in the deployment confirmation in the toolbox
 
+<Callout title="Note" type="info">
+Keep this address handy as you'll need it for the next steps in the bridging process.
+</Callout>
 </Step>
 </Steps>

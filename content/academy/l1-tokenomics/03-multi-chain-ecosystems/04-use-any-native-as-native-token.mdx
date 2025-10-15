@@ -7,7 +7,7 @@ icon: Terminal
 ---
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-In this section, you will learn how to transfer a native token from Avalanche’s C-Chain to a new Avalanche L1 using Interchain Token Transfers (ICTT) and set it up to act as the **native token** on the new L1. This guide will walk you through each step, from creating a L1 to transferring and using the native token.
+In this section, you will learn how to transfer a native token from Avalanche’s C-Chain to a new Avalanche L1 using Interchain Token Transfers (ICTT) and set it up to act as the **native token** on the new L1. This guide will walk you through each step, from creating an L1 to transferring and using the native token.
 
 <Steps>
 <Step>
@@ -23,7 +23,7 @@ avalanche blockchain create myblockchain
 avalanche blockchain deploy myblockchain
 ```
 
-Take note of the important addresses (e.g., `Teleporter Registry`, `Funded Address`) from the deployment output as they will be needed in the following steps.
+Take note of the important addresses (e.g., `ICM Registry`, `Funded Address`) from the deployment output as they will be needed in the following steps.
 </Step>
 <Step>
 ### Wrap the Native Token on C-Chain
@@ -31,7 +31,7 @@ Take note of the important addresses (e.g., `Teleporter Registry`, `Funded Addre
 You'll need to deploy a wrapped token contract for your native token on the C-Chain. The wrapped token will serve as the transferable asset between the chains.
 
 ```bash
-forge create --rpc-url local-c --private-key $PK lib/avalanche-interchain-token-transfer/contracts/src/WrappedNativeToken.sol:WrappedNativeToken --broadcast
+forge create --rpc-url local-c --private-key $PK lib/icm-contracts/contracts/ictt/WrappedNativeToken.sol:WrappedNativeToken --broadcast
 ```
 
 After deployment, save the `Deployed to` address in an environment variable for future use.
@@ -48,13 +48,13 @@ Now, deploy the Interchain Token Transfer contracts on both the `C-Chain` and th
 - `NativeTokenHome` Contract on C-Chain  
 
 ```bash
-forge create --rpc-url local-c --private-key $PK lib/avalanche-interchain-token-transfer/contracts/src/TokenHome/NativeTokenHome.sol:NativeTokenHome --constructor-args $TELEPORTER_REGISTRY_C_CHAIN $FUNDED_ADDRESS $WRAPPED_NATIVE_C_CHAIN --broadcast
+forge create --rpc-url local-c --private-key $PK lib/icm-contracts/contracts/ictt/TokenHome/NativeTokenHome.sol:NativeTokenHome --constructor-args $ICM_REGISTRY_C_CHAIN $FUNDED_ADDRESS $WRAPPED_NATIVE_C_CHAIN --broadcast
 ```
 
 - `NativeTokenRemote` Contract on `myblockchain`
 
 ```bash
-forge create --rpc-url myblockchain --private-key $PK lib/avalanche-interchain-token-transfer/contracts/src/TokenRemote/NativeTokenRemote.sol:NativeTokenRemote --constructor-args "(${TELEPORTER_REGISTRY_L1}, ${FUNDED_ADDRESS}, ${C_CHAIN_BLOCKCHAIN_ID_HEX}, ${NATIVE_HOME_TRANSFERER_C_CHAIN})" "NATV" 700000000000000000000 0 false 0 --broadcast
+forge create --rpc-url myblockchain --private-key $PK lib/icm-contracts/contracts/ictt/TokenRemote/NativeTokenRemote.sol:NativeTokenRemote --constructor-args "(${ICM_REGISTRY_L1}, ${FUNDED_ADDRESS}, ${C_CHAIN_BLOCKCHAIN_ID_HEX}, ${NATIVE_HOME_TRANSFERER_C_CHAIN})" "NATV" 700000000000000000000 0 false 0 --broadcast
 ```
 
 _Note: Ensure that the initial amount matches the native token amount minted on the C-Chain during the wrapped token deployment._
@@ -143,6 +143,6 @@ cast call --rpc-url myblockchain $NATIVE_TOKEN_REMOTE_L1 "isCollateralized()(boo
 
 ### Conclusion
 
-By following these steps, you’ll successfully transfer a native token from the C-Chain to a L1 and use it as the native token via Avalanche’s Interchain Token Transfer system. 
+By following these steps, you’ll successfully transfer a native token from the C-Chain to an L1 and use it as the native token via Avalanche’s Interchain Token Transfer system. 
 
 For more detailed information, refer to the refer to the [official Avalanche ICTT documentation](/academy/interchain-token-transfer).

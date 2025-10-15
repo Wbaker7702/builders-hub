@@ -1,7 +1,6 @@
 type Instructor = {
     name: string;
     title: string;
-    
     twitter: string;
     linkedin: string;
     github: string;
@@ -10,7 +9,7 @@ type Instructor = {
 const instructors: Instructor[] = [
     {
         name: "Martin Eckardt",
-        title: "Director of Developer Relations",
+        title: "Sr. Director of Developer Relations",
 
         twitter: "https://x.com/martin_eckardt",
         linkedin: "https://www.linkedin.com/in/eckardt/",
@@ -71,11 +70,19 @@ const instructors: Instructor[] = [
         twitter: "https://x.com/rrodrigovillar",
         linkedin: "",
         github: "",
+    },
+    {
+        name: "Nicolas Arnedo",
+        title: "Developer Relations Engineer",
+
+        twitter: "https://x.com/navilla_eth",
+        linkedin: "https://www.linkedin.com/in/nicolasarnedo/",
+        github: "https://github.com/navillanueva",
     }
 ];
 
-export function getInstructorsByNames(names:string[]) : Instructor[] {
-    return instructors.filter((instructor) => names.includes(instructor.name));
+export function getInstructorsByNames(names: string[]): Instructor[] {
+    return names.map((name) => instructors.find((instructor) => instructor.name === name)).filter((obj) => obj !== undefined) as Instructor[];
 }
 
 export default instructors;

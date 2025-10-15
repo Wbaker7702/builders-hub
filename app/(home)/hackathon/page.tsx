@@ -1,8 +1,7 @@
 "use client"
 import React, { useState, ReactNode } from "react";
 import Link from 'next/link';
-import { ArrowUpRight, Code, Link as Zap, Link2, Lightbulb, X, Book, Users, SquareTerminal, Box, Mail, Network } from 'lucide-react';
-//import PartnerTracks from './partners';
+import { ArrowUpRight, Code, Link as Zap, X, Book, Users, SquareTerminal, Box, Network } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 
 const Card = ({ children, className = "", onClick = () => {} }: { children: ReactNode; className?: string; onClick?: () => void }) => (
@@ -139,7 +138,7 @@ const TrackCard: React.FC<{ track: Track }> = ({ track }) => {
         <div className="absolute top-3 right-3 text-gray-400 transition-all duration-300 ease-in-out group-hover:text-blue-600">
           <ArrowUpRight size={28} className="transform transition-transform duration-300 ease-in-out group-hover:translate-x-1 group-hover:-translate-y-1"/>
         </div>
-        <div className="p-6 flex-grow">
+        <div className="p-6 grow">
           <div className="flex items-center mb-4">
             <div className={`p-2 rounded-full ${track.color} bg-opacity-20 mr-3`}>
               {track.icon}
@@ -253,7 +252,7 @@ export default function HackathonPage() {
       <div className="py-12 sm:py-12">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto w-full lg:mx-0">
-          <img src="/hackathon-images/AvalancheSummit_London_HackathonLogo_Blue.png" alt="Summit London Logo" className="mx-auto h-32 w-auto" />
+          <img src="https://qizat5l3bwvomkny.public.blob.vercel-storage.com/builders-hub/hackathon-images/AvalancheSummit_London_HackathonLogo_Blue-LGHoUkeODPaagguBk0Fe1MM2ZbOBc9.png" alt="Summit London Logo" className="mx-auto h-32 w-auto" />
          <p className="mt-12 text-center text-lg leading-8 text-muted-foreground">
             At Avalanche, we believe in the power of technology to transform industries and solve real-world problems.
             This hackathon aims to harness the potential of Avalanche's robust technology stack to address pressing issues and create scalable, practical solutions. 
@@ -267,7 +266,7 @@ export default function HackathonPage() {
           </div>
         </div>
           <div className="flex items-center max-w-xl p-4 mx-auto mt-4 text-sm rounded-lg group" style={{ justifyContent: "center" }}>
-            <Link href="https://lu.ma/avalanchesummitlondonhackathon" className={buttonVariants({ size: 'lg', variant: 'default' })}>
+            <Link href="https://lu.ma/avalanchesummitlondonhackathon?utm_source=builder_hub" className={buttonVariants({ size: 'lg', variant: 'default' })}>
               Register Here! →
             </Link>
           </div>
@@ -276,7 +275,7 @@ export default function HackathonPage() {
 
       <div className="py-6 sm:py-6">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <Card className="bg-gradient-to-r from-yellow-100 to-yellow-200 dark:from-yellow-800 dark:to-yellow-900">
+          <Card className="bg-linear-to-r from-yellow-100 to-yellow-200 dark:from-yellow-800 dark:to-yellow-900">
             <div className="p-8 text-center">
               <h3 className="text-3xl font-bold mb-4 flex justify-center items-center gap-2 text-yellow-600 dark:text-yellow-300">
                 <span>🏆</span> Prizes

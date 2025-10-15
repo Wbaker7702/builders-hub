@@ -1,6 +1,6 @@
 import { useState, useEffect, ReactNode } from 'react';
 import Pre from './Pre';
-
+import { deduplicateEthRequestAccounts } from './deduplicateEthRequestAccounts';
 export interface ChainConfig {
     chainId: string;
     chainName: string;
@@ -67,8 +67,13 @@ export default function RequireWalletConnection({ children, chainConfig, require
             const chainId = await window.ethereum.request({ method: 'eth_chainId' });
             if (chainId !== chainConfig.chainId) return;
 
+            if (!window.avalanche) {
+                setError('No wallet detected');
+                return;
+            }
+
             // Check if account can be accessed
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            const accounts = await deduplicateEthRequestAccounts()
             if (!accounts || accounts.length === 0) {
                 setError('No account detected');
                 return;

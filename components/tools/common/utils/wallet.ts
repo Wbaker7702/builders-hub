@@ -1,3 +1,5 @@
+import { deduplicateEthRequestAccounts } from '../ui/deduplicateEthRequestAccounts';
+
 declare global {
     interface Window {
         ethereum?: {
@@ -13,7 +15,7 @@ export async function getWalletAddress() {
         throw new Error('No wallet detected');
     }
 
-    const accounts = await window.avalanche.request({ method: 'eth_requestAccounts', params: [] });
+    const accounts = await deduplicateEthRequestAccounts()
     if (!accounts || accounts.length === 0) {
         throw new Error('No account found');
     }
@@ -22,10 +24,8 @@ export async function getWalletAddress() {
 }
 
 
-import { secp256k1, UnsignedTx, utils } from '@avalabs/avalanchejs';
+import { secp256k1, UnsignedTx } from '@avalabs/avalanchejs';
 import { bytesToHex, hexToBytes } from '@noble/hashes/utils';
-import { Address } from 'micro-eth-signer';
-import { keccak256, toRlp, toBytes } from 'viem'
 
 
 export function newPrivateKey(): string {
