@@ -69,16 +69,24 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Construct the URL safely
-    const fetchUrl = `${allowedBlobBase.replace(/\/$/, '')}/${encodeURIComponent(fileName)}`;
-    const blobExists = await fetch(fetchUrl, {
-      method: 'HEAD',
-    }).then(res => res.ok).catch(() => false);
+    let fetchUrl = '';
+    if (fileName) {
+      fetchUrl = `${allowedBlobBase.replace(/\/$/, '')}/${encodeURIComponent(fileName)}`;
+    } else if (url) {
+      fetchUrl = url;
+    }
 
-    if (!blobExists) {
-      return NextResponse.json(
-        { message: 'The file does not exist or has already been deleted' },
-        { status: 404 }
-      );
+    if (fetchUrl) {
+      const blobExists = await fetch(fetchUrl, {
+        method: 'HEAD',
+      }).then(res => res.ok).catch(() => false);
+
+      if (!blobExists) {
+        return NextResponse.json(
+          { message: 'The file does not exist or has already been deleted' },
+          { status: 404 }
+        );
+      }
     }
 
     await del(fileName || url!, {
