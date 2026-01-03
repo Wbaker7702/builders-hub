@@ -999,5 +999,5 @@ export async function POST(req: Request) {
     6. NEVER create URLs by combining paths - this leads to 404 errors`,
   });
 
-  return result.toDataStreamResponse();
+  return result.toTextStreamResponse();
 }

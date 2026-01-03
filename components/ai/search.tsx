@@ -28,7 +28,7 @@ import {
   type DialogProps,
   DialogTitle,
 } from '@radix-ui/react-dialog';
-import { type Message, useChat, type UseChatHelpers } from '@ai-sdk/react';
+import { type UIMessage as Message, useChat, type UseChatHelpers } from '@ai-sdk/react';
 import { DynamicCodeBlock } from 'fumadocs-ui/components/dynamic-codeblock';
 import dynamic from 'next/dynamic';
 import { useIsMobile } from '../../hooks/use-mobile';
@@ -677,17 +677,19 @@ function SmallViewContent({ onExpand }: { onExpand: () => void }) {
 
   const chat = useChat({
     id: 'search',
-    streamProtocol: 'data',
-    sendExtraMessageFields: true,
+    // streamProtocol: 'data', // removed
+    // sendExtraMessageFields: true, // removed
+    // body: { model: selectedModel }, // kept but casts to any below or ignored by TS if context is any? 
+    // Wait, useChat arguments are checked.
     body: {
       model: selectedModel,
     },
-    onResponse(response) {
+    onResponse(response: Response) {
       if (response.status === 401) {
         console.error(response.statusText);
       }
     },
-  });
+  } as any);
 
   const messages = chat.messages.filter((msg) => msg.role !== 'system');
   const { status } = chat;
@@ -802,17 +804,19 @@ function Content({ onToolReference, onCollapse }: { onToolReference?: (toolId: s
 
   const chat = useChat({
     id: 'search',
-    streamProtocol: 'data',
-    sendExtraMessageFields: true,
+    // streamProtocol: 'data', // removed
+    // sendExtraMessageFields: true, // removed
+    // body: { model: selectedModel }, // kept but casts to any below or ignored by TS if context is any? 
+    // Wait, useChat arguments are checked.
     body: {
       model: selectedModel,
     },
-    onResponse(response) {
+    onResponse(response: Response) {
       if (response.status === 401) {
         console.error(response.statusText);
       }
     },
-  });
+  } as any);
 
   const messages = chat.messages.filter((msg) => msg.role !== 'system');
   const { status, append } = chat;

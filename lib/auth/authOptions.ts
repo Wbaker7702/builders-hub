@@ -7,6 +7,7 @@ import { prisma } from '../../prisma/prisma';
 import { JWT } from 'next-auth/jwt';
 import type { VerifyOTPResult } from '@/types/verifyOTPResult';
 import { upsertUser } from '@/server/services/auth';
+import { randomInt } from 'crypto';
 
 declare module 'next-auth' {
   export interface Session {
@@ -55,7 +56,7 @@ async function verifyOTP(
 }
 
 export function generate6DigitCode() {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  return randomInt(100000, 1000000).toString();
 }
 
 export const AuthOptions: NextAuthOptions = {
@@ -100,11 +101,6 @@ export const AuthOptions: NextAuthOptions = {
 
         let user = await prisma.user.findUnique({ where: { email } });
         if (!user) {
-          // user = await prisma.user.create({
-          //   data: {
-          //     email, notification_email: email, name: '', image: '', last_login: null
-          //   },
-          // }
           user = {
             email, notification_email: email, name: '', image: '', last_login: new Date(), authentication_mode: '', bio: '',
             custom_attributes: [], id: '', integration: '', notifications: null, profile_privacy: null, social_media: [], telegram_user: '', user_name: '', created_at: new Date()
