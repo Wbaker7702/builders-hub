@@ -295,7 +295,7 @@ function SuggestedFollowUps({ questions, onQuestionClick }: {
 // }
 
 function Message({ message, isLast, onFollowUpClick, isStreaming, onToolReference }: {
-  message: any;
+  message: Message;
   isLast: boolean;
   onFollowUpClick: (question: string) => void;
   isStreaming?: boolean;
