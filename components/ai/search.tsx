@@ -34,7 +34,7 @@ import dynamic from 'next/dynamic';
 import { useIsMobile } from '../../hooks/use-mobile';
 import React from 'react';
 
-const ChatContext = createContext<any>(null);
+const ChatContext = createContext<UseChatHelpers | null>(null);
 function useChatContext() {
   return use(ChatContext)!;
 }
