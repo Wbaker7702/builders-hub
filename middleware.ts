@@ -5,17 +5,20 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
   const response = NextResponse.next();
-  // Security: Restrict CORS to allowed origins or disable it if not needed. 
-  // For now, we remove the wildcard. If external access is needed, configure specific origins.
-  // response.headers.set("Access-Control-Allow-Origin", "*"); 
-  // response.headers.set(
-  //   "Access-Control-Allow-Methods",
-  //   "GET, POST, PUT, DELETE, OPTIONS"
-  // );
-  // response.headers.set(
-  //   "Access-Control-Allow-Headers",
-  //   "Content-Type, Authorization"
-  // );
+  
+  // Security Headers
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set(
+    "Permissions-Policy", 
+    "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+  );
+  // Content Security Policy
+  response.headers.set(
+    "Content-Security-Policy",
+    "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; connect-src 'self' https:;"
+  );
 
   if (req.method === "OPTIONS") {
     return new Response(null, { status: 204 });
@@ -61,7 +64,8 @@ export async function middleware(req: NextRequest) {
   }
   return withAuth(
     (authReq: NextRequestWithAuth): NextMiddlewareResult => {
-      return NextResponse.next();
+      // Pass the response with headers
+      return response;
     },
     {
       pages: {

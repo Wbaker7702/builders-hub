@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendOTP } from '@/server/services/login';
+import { rateLimit } from '@/lib/rateLimit';
 
-export async function POST(request: NextRequest) {
+async function handler(request: NextRequest) {
   try {
     const body = await request.json();
     const { email } = body;
@@ -27,3 +28,11 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export const POST = rateLimit(handler, {
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  maxRequests: 5, // 5 requests per IP
+  identifier: async (req: NextRequest) => {
+    return req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
+  }
+});
