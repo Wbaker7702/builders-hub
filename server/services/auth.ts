@@ -17,6 +17,24 @@ export async function upsertUser(user: User, account: Account | null, profile: P
     ? existingUser.authentication_mode
     : `${existingUser?.authentication_mode ?? ""},${account?.provider}`.replace(/^,/, "");
 
+  // Audit Log for Login
+  try {
+      await prisma.consoleLog.create({
+          data: {
+              user_id: existingUser?.id || 'unknown_pending_creation',
+              status: 'success',
+              action_path: 'auth/login',
+              data: { 
+                  email: user.email, 
+                  provider: account?.provider,
+                  is_new_user: !existingUser 
+              }
+          }
+      });
+  } catch (e) {
+       // Best effort logging
+  }
+
   return await prisma.user.upsert({
     where: { email: user.email },
     update: {
