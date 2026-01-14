@@ -146,7 +146,7 @@ export function VerifyEmail({
                 <InputOTPGroup>
                   {Array.from({ length: 6 }).map((value, i) => (
                     <InputOTPSlot
-                      className="rounded-md text-center text-lg m-2 border Dark:text-white border-zinc-800"
+                      className="rounded-md text-center text-lg m-2 border dark:text-white border-zinc-800"
                       key={i}
                       index={i}
                     />
@@ -165,7 +165,7 @@ export function VerifyEmail({
             {expired && (
               <Button
                 type="button"
-                className="w-full px-4 py-2 gap-2 dark:bg-zinc-50 Dark:text-zinc-800  hover:bg-primary/90"
+                className="w-full px-4 py-2 gap-2 dark:bg-zinc-50 dark:text-zinc-800  hover:bg-primary/90"
                 onClick={handleResend}
               >
                 Get a New Code
@@ -185,7 +185,7 @@ export function VerifyEmail({
 
             <Button
               type="submit"
-              className="w-full px-4 py-2 gap-2 dark:bg-zinc-50 Dark:text-zinc-800  hover:bg-primary/90"
+              className="w-full px-4 py-2 gap-2 dark:bg-zinc-50 dark:text-zinc-800  hover:bg-primary/90"
               onClick={onBack}
             >
               Go back
@@ -214,7 +214,7 @@ export function VerifyEmail({
               <Link
                 href="#"
                 target="_blank"
-                className="underline Dark:text-white  Dark:hover:text-gray-300"
+                className="underline dark:text-white dark:hover:text-gray-300"
               >
                 contact support
               </Link>
