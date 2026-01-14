@@ -128,7 +128,7 @@ function Formlogin({ callbackUrl = "/" }: { callbackUrl?: string }) {
                       <Link
                         href="https://www.avax.network/terms-of-use"
                         target="_blank"
-                        className="underline Dark:text-white  Dark:hover:text-gray-300"
+                        className="underline dark:text-white dark:hover:text-gray-300"
                       >
                         Terms of Service
                       </Link>{" "}
@@ -136,7 +136,7 @@ function Formlogin({ callbackUrl = "/" }: { callbackUrl?: string }) {
                       <Link
                         href="https://www.avax.network/privacy-policy"
                         target="_blank"
-                        className="tracking-normal text-center underline underline-offset-auto decoration-solid  Dark:text-white  Dark:hover:text-gray-300"
+                        className="tracking-normal text-center underline underline-offset-auto decoration-solid  dark:text-white dark:hover:text-gray-300"
                       >
                         Privacy Policy
                       </Link>

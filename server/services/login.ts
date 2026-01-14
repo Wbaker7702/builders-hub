@@ -6,18 +6,41 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 export async function sendOTP(email: string) {
   const code = generate6DigitCode();
-  await prisma.verificationToken.upsert({
-    where: { identifier_token: { identifier: email, token: code } },
-    update: {
-      token: code,
-      expires: new Date(Date.now() + 3 * 60 * 1000),
-    },
-    create: {
+  
+  // Invalidate previous tokens for this email to prevent accumulation and ensure only the latest is valid
+  try {
+    await prisma.verificationToken.deleteMany({
+        where: { identifier: email }
+    });
+  } catch (e) {
+      console.warn("Failed to delete old tokens", e);
+  }
+
+  await prisma.verificationToken.create({
+    data: {
       identifier: email,
       token: code,
       expires: new Date(Date.now() + 3 * 60 * 1000),
-    },
+    }
   });
+
+  // Audit Log (Best effort)
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (user) {
+        await prisma.consoleLog.create({
+            data: {
+                user_id: user.id,
+                status: 'info',
+                action_path: 'auth/send-otp',
+                data: { email }
+            }
+        });
+    }
+  } catch (e) {
+      // Ignore logging errors to not block flow
+      console.error("Audit log failed", e);
+  }
 
   const from = {
     email: process.env.EMAIL_FROM as string,

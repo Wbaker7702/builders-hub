@@ -37,16 +37,46 @@ async function verifyOTP(
   });
 
   if (record == null) {
+    try {
+        await prisma.consoleLog.create({
+            data: {
+                user_id: 'unknown_failed_login',
+                status: 'error',
+                action_path: 'auth/verify-otp',
+                data: { email, reason: 'NOT_FOUND' }
+            }
+        });
+    } catch (e) {}
     return { isValid: false, reason: 'NOT_FOUND' };
   }
   if (record.expires < new Date()) {
     await prisma.verificationToken.delete({
       where: { identifier_token: { identifier: email, token: record.token } },
     });
+     try {
+        await prisma.consoleLog.create({
+            data: {
+                user_id: 'unknown_failed_login',
+                status: 'error',
+                action_path: 'auth/verify-otp',
+                data: { email, reason: 'EXPIRED' }
+            }
+        });
+    } catch (e) {}
     return { isValid: false, reason: 'EXPIRED' };
   }
 
   if (record.token !== code) {
+      try {
+        await prisma.consoleLog.create({
+            data: {
+                user_id: 'unknown_failed_login',
+                status: 'error',
+                action_path: 'auth/verify-otp',
+                data: { email, reason: 'INVALID' }
+            }
+        });
+    } catch (e) {}
     return { isValid: false, reason: 'INVALID' };
   }
   await prisma.verificationToken.delete({
