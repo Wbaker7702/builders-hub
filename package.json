@@ -94,7 +94,7 @@
     "lunr": "^2.3.9",
     "mermaid": "^11.11.0",
     "new-github-issue-url": "^1.1.0",
-    "next": "^16.1.1",
+    "next": "^16.1.5",
     "next-auth": "^4.24.13",
     "next-mdx-remote": "^5.0.0",
     "next-themes": "^0.4.6",
