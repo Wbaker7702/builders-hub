@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useProjectSubmission } from '../context/ProjectSubmissionContext';
 import { useRouter } from 'next/navigation';
 
-const ALLOWED_VIDEO_HOSTS = [
+const ALLOWED_VIDEO_HOSTS = new Set([
   'youtube.com',
   'www.youtube.com',
   'm.youtube.com',
@@ -16,7 +16,7 @@ const ALLOWED_VIDEO_HOSTS = [
   'www.youtu.be',
   'loom.com',
   'www.loom.com',
-];
+]);
 
 function isAllowedVideoHost(hostname: string): boolean {
   const normalized = hostname.toLowerCase();
