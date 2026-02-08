@@ -127,11 +127,16 @@ export const FormSchema = z
           if (!val) return true;
           try {
             const url = new URL(val);
-            return (
-              url.hostname.includes('youtube.com') ||
-              url.hostname.includes('youtu.be') ||
-              url.hostname.includes('loom.com')
-            );
+            const hostname = url.hostname.toLowerCase();
+            const allowedHosts = new Set([
+              'youtube.com',
+              'www.youtube.com',
+              'youtu.be',
+              'www.youtu.be',
+              'loom.com',
+              'www.loom.com',
+            ]);
+            return allowedHosts.has(hostname);
           } catch {
             return false;
           }
