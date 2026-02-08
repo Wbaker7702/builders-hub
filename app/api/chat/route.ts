@@ -357,10 +357,7 @@ function searchContent(query: string, sections: Array<{ id: string; title: strin
   // Pattern: "X tutorial" or "X guide"
   const tutorialKeywordMatch = queryLower.match(/\s+(tutorial|guide|example)/);
   if (tutorialKeywordMatch && tutorialKeywordMatch.index !== undefined) {
-    const keywordIndex = tutorialKeywordMatch.index
-      + tutorialKeywordMatch[0].length
-      - tutorialKeywordMatch[1].length;
-    mainSubject = queryLower.slice(0, keywordIndex).trim();
+    mainSubject = queryLower.slice(0, tutorialKeywordMatch.index).trim();
     queryType = 'tutorial';
   }
   
