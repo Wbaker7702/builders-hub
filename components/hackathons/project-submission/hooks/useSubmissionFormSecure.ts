@@ -9,6 +9,7 @@ import { useProjectSubmission } from '../context/ProjectSubmissionContext';
 import { useRouter } from 'next/navigation';
 
 const ALLOWED_VIDEO_HOSTS = [
+const ALLOWED_VIDEO_HOSTS = new Set([
   'youtube.com',
   'www.youtube.com',
   'm.youtube.com',
@@ -21,6 +22,11 @@ const ALLOWED_VIDEO_HOSTS = [
 function isAllowedVideoHost(hostname: string): boolean {
   const normalized = hostname.toLowerCase();
   return ALLOWED_VIDEO_HOSTS.includes(normalized);
+]);
+
+function isAllowedVideoHost(hostname: string): boolean {
+  const normalized = hostname.toLowerCase();
+  return ALLOWED_VIDEO_HOSTS.has(normalized);
 }
 
 export const FormSchema = z
@@ -131,6 +137,18 @@ export const FormSchema = z
           if (!val) return true;
           try {
             const url = new URL(val);
+
+            const allowedHosts = ['youtube.com', 'youtu.be', 'loom.com'] as const;
+            const hostname = url.hostname.toLowerCase();
+
+            const isAllowedHost = (host: string): boolean => {
+              return (
+                allowedHosts.includes(host as (typeof allowedHosts)[number]) ||
+                allowedHosts.some((allowed) => host.endsWith('.' + allowed))
+              );
+            };
+
+            return isAllowedHost(hostname);
             return isAllowedVideoHost(url.hostname);
           } catch {
             return false;
