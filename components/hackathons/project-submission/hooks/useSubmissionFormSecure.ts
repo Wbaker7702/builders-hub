@@ -7,6 +7,22 @@ import { useSession } from 'next-auth/react';
 import { useToast } from '@/hooks/use-toast';
 import { useProjectSubmission } from '../context/ProjectSubmissionContext';
 import { useRouter } from 'next/navigation';
+
+const ALLOWED_VIDEO_HOSTS = [
+  'youtube.com',
+  'www.youtube.com',
+  'm.youtube.com',
+  'youtu.be',
+  'www.youtu.be',
+  'loom.com',
+  'www.loom.com',
+];
+
+function isAllowedVideoHost(hostname: string): boolean {
+  const normalized = hostname.toLowerCase();
+  return ALLOWED_VIDEO_HOSTS.includes(normalized);
+}
+
 export const FormSchema = z
   .object({
     project_name: z
@@ -115,11 +131,7 @@ export const FormSchema = z
           if (!val) return true;
           try {
             const url = new URL(val);
-            return (
-              url.hostname.includes('youtube.com') ||
-              url.hostname.includes('youtu.be') ||
-              url.hostname.includes('loom.com')
-            );
+            return isAllowedVideoHost(url.hostname);
           } catch {
             return false;
           }
