@@ -20,7 +20,7 @@ const ALLOWED_VIDEO_HOSTS = new Set([
 
 function isAllowedVideoHost(hostname: string): boolean {
   const normalized = hostname.toLowerCase();
-  return ALLOWED_VIDEO_HOSTS.includes(normalized);
+  return ALLOWED_VIDEO_HOSTS.has(normalized);
 }
 
 export const FormSchema = z
