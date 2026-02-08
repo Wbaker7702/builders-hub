@@ -115,11 +115,18 @@ export const FormSchema = z
           if (!val) return true;
           try {
             const url = new URL(val);
-            return (
-              url.hostname.includes('youtube.com') ||
-              url.hostname.includes('youtu.be') ||
-              url.hostname.includes('loom.com')
-            );
+
+            const allowedHosts = ['youtube.com', 'youtu.be', 'loom.com'] as const;
+            const hostname = url.hostname.toLowerCase();
+
+            const isAllowedHost = (host: string): boolean => {
+              return (
+                allowedHosts.includes(host as (typeof allowedHosts)[number]) ||
+                allowedHosts.some((allowed) => host.endsWith('.' + allowed))
+              );
+            };
+
+            return isAllowedHost(hostname);
           } catch {
             return false;
           }
