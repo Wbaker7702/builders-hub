@@ -15,11 +15,17 @@ export function createParser(transforms: TransformFunction[]): (content: string,
   };
 }
 
+function escapeYamlDoubleQuoted(value: string): string {
+  return value
+    .replace(/\\/g, '\\\\')
+    .replace(/"/g, '\\"');
+}
+
 // Transformation Fns
 export const addFrontmatter: TransformFunction = (content, meta) => {
   const frontmatter = `---
-title: "${meta.title.replace(/"/g, '\\"')}"
-description: "${meta.description.replace(/"/g, '\\"')}"
+title: "${escapeYamlDoubleQuoted(meta.title)}"
+description: "${escapeYamlDoubleQuoted(meta.description)}"
 edit_url: ${meta.editUrl || ''}
 ---
 
