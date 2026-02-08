@@ -38,16 +38,22 @@ export const MultiLinkInput: React.FC<MultiLinkInputProps> = ({
     try {
       
       const url = new URL(newLink);
+      const hostname = url.hostname.toLowerCase();
       
-      
-      if (name === 'demo_link' && (
-        url.hostname.includes('youtube.com') ||
-        url.hostname.includes('youtu.be') ||
-        url.hostname.includes('loom.com')
-      )) {
+      if (
+        name === "demo_link" &&
+        (
+          hostname === "youtube.com" ||
+          hostname.endsWith(".youtube.com") ||
+          hostname === "youtu.be" ||
+          hostname.endsWith(".youtu.be") ||
+          hostname === "loom.com" ||
+          hostname.endsWith(".loom.com")
+        )
+      ) {
         form.setError(name, {
-          type: 'manual',
-          message: 'YouTube and Loom links should be added in the video section'
+          type: "manual",
+          message: "YouTube and Loom links should be added in the video section",
         });
         return;
       }
@@ -57,8 +63,8 @@ export const MultiLinkInput: React.FC<MultiLinkInputProps> = ({
       
       if (currentLinks.includes(newLink)) {
         form.setError(name, {
-          type: 'manual',
-          message: 'This link has already been added'
+          type: "manual",
+          message: "This link has already been added",
         });
         return;
       }
@@ -67,8 +73,8 @@ export const MultiLinkInput: React.FC<MultiLinkInputProps> = ({
       setNewLink("");
     } catch (error) {
       form.setError(name, {
-        type: 'manual',
-        message: 'Please enter a valid URL'
+        type: "manual",
+        message: "Please enter a valid URL",
       });
     }
   };
